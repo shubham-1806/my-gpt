@@ -1,8 +1,8 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import style from "./Header.module.css";
 import profile from "../../assets/profile.svg"
 const Header = () => {
-  //   const navigate = useNavigate();
+    const navigate = useNavigate();
 
   return (
     <header className={style.header}>
@@ -14,16 +14,18 @@ const Header = () => {
             <span></span>
             <span></span>
             <ul className={style.menuItem}>
-              <li>
-                <a href="#">Home</a>
+              <br/>
+              <br/>
+              <li style={{cursor:"pointer"}}>
+                <a onClick={()=>navigate("/")}>Home</a>
               </li>
-              <li>
-                <a href="#">About</a>
+              <li style={{cursor:"pointer"}}>
+                <a onClick={()=>navigate("/summary")}>Summarise</a>
               </li>
             </ul>
           </div>
         </div>
-        <div>
+        <div onClick={()=>navigate("/")} style={{cursor:"pointer"}}>
           <h2 className={style.title}>SummaryAI</h2>
         </div>
       </div>

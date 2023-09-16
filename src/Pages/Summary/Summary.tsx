@@ -1,17 +1,41 @@
-import { useEffect, useRef } from "react";
-import { Header } from "../../Components";
+import { useEffect, useRef, useState } from "react";
+import { Header, Loader } from "../../Components";
 import style from "./Summary.module.css";
+import x from "../../assets/x.svg";
+import { useNavigate } from "react-router-dom";
 
 const Summary = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ref = useRef<any>(null);
+  const dropBoxRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const inputRef = useRef<any>(null);
 
-  const upload = ()=>{
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    // const file = (window as any).file;
-    // console.log(file.getFile())
-    console.log("uploading")
-  }
+  const navigate = useNavigate();
+  const [fileName, setFileName] = useState<string>("");
+  const [filePath, setFilePath] = useState<string>("");
+  const [file, setFile] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const summarise = async () => {
+    setLoading(true);
+    console.log(filePath);
+    // Function to RabbiTMQ
+    // TODO
+    
+
+    navigate("/result", {state: {name: "Summary Name", data:"Summary Data"}})
+    setLoading(false);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const uploadFile = (e: any) => {
+    console.log(e.target.files[0].path);
+    dropBoxRef.current.style.background = "#EAEAEA";
+    setFilePath(e.target.files[0].path);
+    const splitPath = e.target.files[0].path.split("/");
+    setFileName(splitPath[splitPath.length - 1]);
+    setFile(true);
+  };
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,7 +44,9 @@ const Summary = () => {
       event.stopPropagation();
 
       for (const f of event.dataTransfer.files) {
-        console.log("File Path of dragged files: ", f.path);
+        setFileName(f.name);
+        setFilePath(f.path);
+        setFile(true);
       }
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,16 +56,14 @@ const Summary = () => {
     };
 
     const dragenter = () => {
-      console.log("dragenter");
-      ref.current.style.background = "#DEDEDE";
+      dropBoxRef.current.style.background = "#EAEAEA";
     };
 
     const dragleave = () => {
-      console.log("dragenter");
-      ref.current.style.background = "#EDF0EF";
+      dropBoxRef.current.style.background = "#EDF0EF";
     };
 
-    const element = ref.current;
+    const element = dropBoxRef.current;
 
     element.addEventListener("drop", drop);
     element.addEventListener("dragover", dragover);
@@ -55,6 +79,12 @@ const Summary = () => {
       }
     };
   }, []);
+
+  const reset = () => {
+    setFile(false);
+    setFileName("");
+    setFilePath("");
+  };
   return (
     <div className={style.mainContainer}>
       <Header />
@@ -66,10 +96,35 @@ const Summary = () => {
           communication
         </p>
         <div className={style.dropBox}>
-          <div className={style.dropBoxInner} ref={ref}>
-            <button className={style.try} onClick={()=>upload()}>Upload a Document</button>
-            <h2 className={style.or}>OR</h2>
-            <h1 className={style.muted}>Drop a File</h1>
+          <div className={style.dropBoxInner} ref={dropBoxRef}>
+            {file ? (
+              <>
+                <img src={x} className={style.cross} onClick={() => reset()} />
+                <h1 className={style.fileName}>{fileName}</h1>
+                <button className={style.try} onClick={() => summarise()}>
+                  {loading ? "Summarising..." : "Summarise the Document?"}
+                </button>
+                {loading ? <Loader /> : null}
+              </>
+            ) : (
+              <>
+                <input
+                  type="file"
+                  id="file"
+                  hidden
+                  ref={inputRef}
+                  onChange={(e) => uploadFile(e)}
+                />
+                <button
+                  className={style.try}
+                  onClick={() => inputRef.current.click()}
+                >
+                  Upload a Document
+                </button>
+                <h2 className={style.or}>OR</h2>
+                <h1 className={style.muted}>Drop a File</h1>{" "}
+              </>
+            )}
           </div>
         </div>
       </div>

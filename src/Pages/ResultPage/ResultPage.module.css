@@ -1,9 +1,31 @@
 .mainContainer{
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: aquamarine;
+    min-height: 100vh;
+    background-color: var(--lightBG);
+    overflow-y: clip;
+}
+
+.resultContainer {
+    padding: 0 3rem 0 ;
+}
+.resultContainer h1{
+    margin: 3rem 0;
+    font-family: Inter;
+    text-align: left;
+    font-style: normal;
+    font-weight: 550;
+    line-height: normal;
+    font-size: 2.5rem;
+}
+
+.resultContainer p{
+    font-family: Inter;
+    text-align: left;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-size: 1.5rem;
 }

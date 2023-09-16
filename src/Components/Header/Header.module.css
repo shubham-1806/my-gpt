@@ -44,7 +44,7 @@
   color: var(--text);
   transition: all 0.3s ease;
   &:hover {
-    color: tomato;
+    color: var(--primaryGreen);
   }
 }
 
@@ -90,11 +90,15 @@
   -webkit-font-smoothing: antialiased;
   transform-origin: 0% 0%;
   transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-  li {
-    padding: 10px 0;
-    font-size: 22px;
-  }
 }
+
+.menuItem li {
+  padding: 1rem 0;
+  font-size: 30px;
+  font-family: Inter;
+}
+
+
 
 .menuLeft {
   transform: scale(1.1);
