@@ -16,3 +16,8 @@ Clone the repository to your local
    ```
     yarn dev
    ```
+3. Add githooks 
+
+   ```
+   yarn husky install
+   ```
