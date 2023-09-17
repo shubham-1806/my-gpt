@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Header, Loader } from "../../Components";
+import { Header, Loader, Toggle } from "../../Components";
 import style from "./Summary.module.css";
 import x from "../../assets/x.svg";
 import { useNavigate } from "react-router-dom";
@@ -9,12 +9,19 @@ const Summary = () => {
   const dropBoxRef = useRef<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const inputRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const toggleRef = useRef<any>(null);
 
   const navigate = useNavigate();
   const [fileName, setFileName] = useState<string>("");
   const [filePath, setFilePath] = useState<string>("");
   const [file, setFile] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [on, setOn] = useState<boolean>(false);
+  
+  const toggle = () => {
+    setOn(prev=> !prev);
+  }
 
   const summarise = async () => {
     setLoading(true);
@@ -22,6 +29,8 @@ const Summary = () => {
     // Function to RabbiTMQ
     // TODO
     
+    const column = on === true ? "double" : "single";
+    console.log(column);
 
     navigate("/result", {state: {name: "Summary Name", data:"Summary Data"}})
     setLoading(false);
@@ -63,6 +72,8 @@ const Summary = () => {
       dropBoxRef.current.style.background = "#EDF0EF";
     };
 
+
+
     const element = dropBoxRef.current;
 
     element.addEventListener("drop", drop);
@@ -101,6 +112,7 @@ const Summary = () => {
               <>
                 <img src={x} className={style.cross} onClick={() => reset()} />
                 <h1 className={style.fileName}>{fileName}</h1>
+                <Toggle toggleRef={toggleRef} toggleFunc={toggle} />
                 <button className={style.try} onClick={() => summarise()}>
                   {loading ? "Summarising..." : "Summarise the Document?"}
                 </button>
