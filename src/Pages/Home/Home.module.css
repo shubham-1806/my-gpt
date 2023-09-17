@@ -1,9 +1,66 @@
 .mainContainer{
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 100vh;
-    width: 100vw;
-    background-color: aquamarine;
+    background-color: var(--lightBG);
+    overflow-y: clip;
+}
+
+.home{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.home div{
+    flex-basis: 50%;
+    width: 40%;
+    
+}
+
+.grad {
+    background: linear-gradient(101deg, #0C746E -3.34%, #7189C5 77.45%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: Inter;
+    font-size: 5.5rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+}
+
+.subtext{
+    color: var(--text);
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 4rem 0 4rem;
+}
+
+.try{
+    border-radius: 2.25rem;
+    background: var(--primaryGreen);
+    display: inline-flex;
+    padding: 1.25rem 3.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--lightBG);
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+    cursor: pointer;
 }

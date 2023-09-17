@@ -1,0 +1,138 @@
+.mainContainer{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--lightBG);
+    overflow-y: clip;
+}
+
+.dropWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropTitle{
+    color: var(--text);
+    font-family: Inter;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 550;
+    line-height: normal;
+}
+
+.subtext{
+    width: 60%;
+    color: var(--text);
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+}
+
+.dropBox{
+    margin: 2rem 0;
+    width: 80%;
+    height: 50%;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='6' stroke-dasharray='8%2c 19' stroke-dashoffset='41' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+.dropBoxInner{
+    margin: 10px auto;
+    box-sizing: border-box;
+    padding: 2rem 0;
+    width: 98%;
+    height: 95%;
+    background-color: var(--box-off-white);
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+.try{
+    border-radius: 2.25rem;
+    background: var(--primaryGreen);
+    display: inline-flex;
+    padding: 1.25rem 3.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--lightBG);
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+    cursor: pointer;
+}
+
+.or{
+    margin-top: 2rem;
+    color: var(--text);
+    opacity: 0.5;
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: relative;
+}
+
+.or::after{
+    content: "";
+    opacity: 0.5;
+    position: absolute;
+    top: 50%;
+    left: 150%;
+    width: 5rem;
+    height: 1px;
+    border-bottom: 2px var(--text) solid;
+}
+
+.or::before{
+    content: "";
+    opacity: 0.5;
+    position: absolute;
+    top: 50%;
+    right: 150%;
+    width: 5rem;
+    height: 1px;
+    border-bottom: 2px var(--text) solid;
+}
+
+.muted{
+    color: var(--text);
+    font-family: Inter;
+    font-size: 1.75rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;   
+    opacity: 0.5;
+}
+
+.cross{
+    position: absolute;
+    top: 0;
+    left: 0;
+    scale: 0.5;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.fileName{
+    color: var(--text);
+    font-family: Inter;
+    font-size: 1rem;
+    text-align: center;
+}
