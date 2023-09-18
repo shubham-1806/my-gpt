@@ -1,7 +1,7 @@
 import { app, BrowserWindow,ipcMain } from "electron";
 import path from "node:path";
 import amqp, { Message } from "amqplib/callback_api";
-import { research_paper_consumer_queue, research_paper_producer_queue } from "../src/Config/config";
+import { research_paper_consumer_queue, research_paper_producer_queue } from "../src/Config/config.ts";
 
 let rabbitmqconnection: amqp.Connection | null = null;
 
@@ -72,14 +72,6 @@ function createWindow() {
             });
         }
     );
-
-    // Test active push message to Renderer-process.
-    win.webContents.on("did-finish-load", () => {
-        win?.webContents.send(
-            "main-process-message",
-            new Date().toLocaleString()
-        );
-    });
 
     if (VITE_DEV_SERVER_URL) {
         win.loadURL(VITE_DEV_SERVER_URL);

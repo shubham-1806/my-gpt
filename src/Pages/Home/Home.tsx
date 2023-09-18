@@ -15,7 +15,7 @@ const Home = () => {
                         Our Precision
                     </h1> 
                     <p className={styles.subtext}>
-                        Meet SummaryAI, your friendly research companion! SummaryAI is like a magic wand for complex research papers. It uses the magic of artificial intelligence to turn lengthy academic documents into easy-to-digest summaries. Say goodbye to long hours of reading and hello to quick, clear, and friendly insights. With SummaryAI, understanding research is a breeze!
+                        Meet My GPT, your friendly research companion! My GPT is like a magic wand for complex research papers and news articles. It uses the magic of artificial intelligence to turn lengthy academic documents into easy-to-digest summaries. Say goodbye to long hours of reading and hello to quick, clear, and friendly insights. With My GPT, understanding research is a breeze!
                     </p>
                     <button className={styles.try} onClick={()=>{navigate("/summary")}}>
                         Try Out Now

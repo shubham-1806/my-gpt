@@ -26,7 +26,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div onClick={()=>navigate("/")} style={{cursor:"pointer"}}>
-                    <h2 className={style.title}>SummaryAI</h2>
+                    <h2 className={style.title}>MyGPT</h2>
                 </div>
             </div>
             <div className={style.profile}>
