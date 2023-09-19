@@ -11,8 +11,19 @@ Clone the repository to your local
    yarn install
    ```
 
-2. Start the vite development server in Dev mode
+2. Create the config file by copying the contents of the example, from the root directory run
 
    ```
-    yarn dev
+   cp src/Config/config.example.ts ./src/Config/config.ts
+   ```
+
+3. Start the vite development server in Dev mode
+
+   ```
+   yarn dev
+   ```
+4. Add githooks 
+
+   ```
+   yarn husky install
    ```
