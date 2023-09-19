@@ -93,7 +93,7 @@ const Summary = () => {
                 <h1 className={style.dropTitle}>Summarise a Research Paper or an Article</h1>
                 <p className={style.subtext}>
           Summarise any article or research paper, and accelerate your reading and learning with
-          our AI technology. Perfect also for screening, review and research
+          our AI technology. Perfect also for research papers, screening articles and reviewing 
           communication.
                 </p>
                 <div className={style.dropBox}>

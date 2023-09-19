@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import style from "./Header.module.css";
 import profile from "../../assets/profile.svg"
+import logo from "../../assets/logo.svg"
+
 const Header = () => {
     const navigate = useNavigate();
 
@@ -25,7 +27,8 @@ const Header = () => {
                         </ul>
                     </div>
                 </div>
-                <div onClick={()=>navigate("/")} style={{cursor:"pointer"}}>
+                <div onClick={()=>navigate("/")} style={{cursor:"pointer", display:"flex", flexFlow:"row nowrap", gap:"1rem"}}>
+                    <img src={logo} alt="logo" />
                     <h2 className={style.title}>MyGPT</h2>
                 </div>
             </div>

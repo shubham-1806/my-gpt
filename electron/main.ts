@@ -24,14 +24,16 @@ let win: BrowserWindow | null;
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
 function createWindow() {
+    console.log(path.join(__dirname, "/logo.svg"))
     win = new BrowserWindow({
-        icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
+        icon: path.join(process.env.VITE_PUBLIC, "/logo.svg"),
         // frame: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
         },
     });
-    // win.menuBarVisible = false
+    win.menuBarVisible = false
+    win.maximize();
 
     amqp.connect(
         "amqp://localhost",
