@@ -7,3 +7,25 @@
     background-color: var(--lightBG);
     overflow-y: clip;
 }
+
+.savedWrapper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column-reverse nowrap;
+}
+
+.savedBox{
+    z-index: 1;
+    cursor: pointer;
+    width: 80%;
+    font-family: Inter;
+    font-size: 1.5rem;
+    padding: 2rem;
+    margin: 1rem;
+    color: var(--text);
+    opacity: 0.8;
+    border-radius: 20px;
+    background-color: var(--box-off-white2);
+}
