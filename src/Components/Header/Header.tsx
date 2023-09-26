@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import style from "./Header.module.css";
-import profile from "../../assets/profile.svg"
-import logo from "../../assets/logo.svg"
+import profile from "../../assets/profile.svg";
+import logo from "../../assets/logo.svg";
+import download from "../../assets/download.svg";
+import chat from "../../assets/chat.svg";
+import bookmark from "../../assets/bookmark.svg";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -16,27 +19,65 @@ const Header = () => {
                         <span></span>
                         <span></span>
                         <ul className={style.menuItem}>
-                            <br/>
-                            <br/>
-                            <li style={{cursor:"pointer"}}>
-                                <a onClick={()=>navigate("/")}>Home</a>
+                            <br />
+                            <br />
+                            <li style={{ cursor: "pointer" }}>
+                                <a onClick={() => navigate("/summary")}>
+                                    <img src={download} />
+                  Upload a PDF to Summarise
+                                </a>
                             </li>
-                            <li style={{cursor:"pointer"}}>
-                                <a onClick={()=>navigate("/summary")}>Summarise</a>
+                            <li style={{ cursor: "pointer" }}>
+                                <a onClick={() => navigate("/chat")}>
+                                    <img src={chat} />
+                  Chat to Summarise
+                                </a>
                             </li>
                             <li style={{cursor:"pointer"}}>
                                 <a onClick={()=>navigate("/grammar")}>Grammar Check</a>
                             </li>
+                            <li style={{ cursor: "pointer" }}>
+                                <a onClick={() => navigate("/saved")}>
+                                    <img src={bookmark} />
+                  Saved Summaries
+                                </a>
+                            </li>
+                            
+                            <div
+                                onClick={() => navigate("/")}
+                                style={{
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    flexFlow: "row nowrap",
+                                    gap: "1rem",
+                                    width: "100%",
+                                    justifyContent: "center",
+                                    position: "absolute",
+                                    top: "50rem",
+                                    left: "0",
+                                }}
+                            >
+                                <img src={logo} alt="logo" />
+                                <h2 className={style.title}>MyGPT</h2>
+                            </div>
                         </ul>
                     </div>
                 </div>
-                <div onClick={()=>navigate("/")} style={{cursor:"pointer", display:"flex", flexFlow:"row nowrap", gap:"1rem"}}>
+                <div
+                    onClick={() => navigate("/")}
+                    style={{
+                        cursor: "pointer",
+                        display: "flex",
+                        flexFlow: "row nowrap",
+                        gap: "1rem",
+                    }}
+                >
                     <img src={logo} alt="logo" />
                     <h2 className={style.title}>MyGPT</h2>
                 </div>
             </div>
             <div className={style.profile}>
-                <img src={profile} alt="profile"/>
+                <img src={profile} alt="profile" />
             </div>
         </header>
     );
