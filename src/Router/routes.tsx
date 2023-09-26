@@ -1,5 +1,7 @@
+import Chat from "../Pages/Chat/Chat";
 import Home from "../Pages/Home/Home";
 import ResultPage from "../Pages/ResultPage/ResultPage";
+import Saved from "../Pages/Saved/Saved";
 import Summary from "../Pages/Summary/Summary";
 
 
@@ -19,6 +21,14 @@ const routes: RouteType[] = [
     {
         path:'/summary',
         element: <Summary/>
+    },
+    {
+        path:'/chat',
+        element: <Chat/>
+    },
+    {
+        path:'/saved',
+        element: <Saved/>
     }
 
 ];
