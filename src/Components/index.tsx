@@ -4,3 +4,4 @@ export { default as Add } from "./GrammerButtons/add"
 export { default as Delete } from "./GrammerButtons/Delete"
 export { default as Swap } from "./GrammerButtons/Swap"
 
+export { default as ChatBubble } from "./ChatBubble/ChatBubble";
