@@ -51,7 +51,7 @@ const ChatBubble = ({ agent, message, isUpload, loading, id, currentId }: ChatBu
                         <>
                             {loading}
                             {currentId !== id ? botMessageList[Number(id)] :
-                                loading ? <Loader/> : <Typewriter
+                                loading ? <Loader rounded={true} /> : <Typewriter
                                     onInit={(typewriter) => {
                                         typewriter
                                             .stop()
