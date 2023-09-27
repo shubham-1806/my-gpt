@@ -35,6 +35,7 @@
     font-weight: 600;
     line-height: normal;
     margin: 0;
+    user-select: none;
 }
 
 .subtext{
@@ -45,6 +46,7 @@
     font-weight: 400;
     line-height: normal;
     margin: 4rem 0 4rem;
+    user-select: none;
 }
 
 .try{
