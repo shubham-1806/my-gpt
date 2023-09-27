@@ -68,6 +68,7 @@ const Chat = () => {
 
     const addBotChatBubble = () => {
         setLoading(true);
+        console.log("adding with id " + id)
         setTimeout(() => {
             setChatMessages([
                 ...chatMessages,
