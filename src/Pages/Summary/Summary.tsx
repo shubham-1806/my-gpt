@@ -65,7 +65,6 @@ const Summary = () => {
         element.addEventListener("dragenter", dragenter);
         element.addEventListener("dragleave", dragleave);
         window.ipcRenderer.addListener("gpt-message", (_event, message) => {
-            console.log("bro listener called bro")
             setLoading(false);
             navigate("/result", { state: { name: 'Summary', data: message } });
         });
