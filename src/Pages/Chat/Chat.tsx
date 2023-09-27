@@ -26,6 +26,7 @@ const Chat = () => {
 
     useEffect(()=>{
         if(state){
+            console.log(state);
             setChatMessages(state);
             setId(state.length)
         }
@@ -80,7 +81,7 @@ const Chat = () => {
             setId(id + 1);
             setBotTurn(false);
             setLoading(false);
-        }, 1000 + Math.random() * 3000);
+        },15000);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
