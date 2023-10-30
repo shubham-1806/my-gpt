@@ -5,6 +5,7 @@ import logo from "../../assets/logo.svg";
 import download from "../../assets/download.svg";
 import chat from "../../assets/chat.svg";
 import bookmark from "../../assets/bookmark.svg";
+import grammar from "../../assets/grammar.svg"
 
 const Header = () => {
     const navigate = useNavigate();
@@ -24,13 +25,20 @@ const Header = () => {
                             <li style={{ cursor: "pointer" }}>
                                 <a onClick={() => navigate("/summary")}>
                                     <img src={download} />
-                  Upload a PDF to Summarise
+                  Upload a PDF to summarize
+                                </a>
+                            </li>
+                            {/* TODO: Add a page for grammar and reformatting */}
+                            <li style={{ cursor: "pointer" }}>
+                                <a onClick={() => navigate("/summary")}>
+                                    <img src={grammar} />
+                  Grammar and Reformatting
                                 </a>
                             </li>
                             <li style={{ cursor: "pointer" }}>
                                 <a onClick={() => navigate("/chat")}>
                                     <img src={chat} />
-                  Chat to Summarise
+                  Chat with your documents
                                 </a>
                             </li>
                             <li style={{ cursor: "pointer" }}>

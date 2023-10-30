@@ -27,6 +27,7 @@ const Chat = () => {
     useEffect(()=>{
         if(state){
             console.log(state);
+            console.log(state);
             setChatMessages(state);
             setId(state.length)
         }
@@ -68,6 +69,7 @@ const Chat = () => {
 
     const addBotChatBubble = () => {
         setLoading(true);
+        console.log("adding with id " + id)
         setTimeout(() => {
             setChatMessages([
                 ...chatMessages,
@@ -81,7 +83,7 @@ const Chat = () => {
             setId(id + 1);
             setBotTurn(false);
             setLoading(false);
-        },15000);
+        },id>1 ? 5000:15000);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
