@@ -1,0 +1,90 @@
+.mainContainer{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--lightBG);
+    overflow-y: clip;
+}
+
+.uploadWrapper{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.reviewWrapper{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.resultWrapper{
+    flex-basis: 60%;
+    background-color: #f0f0f0;
+    height: 85vh;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    padding: 2rem;
+    /* font-size: 10rem; */
+}
+
+.changeWrapper{
+    box-sizing: border-box;
+    margin:0 1rem;
+    flex-basis: 40%;
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    font-family: Inter;
+    font-size: 1.5rem;
+    height: 85vh;
+    overflow-y: scroll;
+}
+
+.changeWrapper > div{
+    box-sizing: border-box;
+    padding: 3rem 2rem;
+    width: 80%;
+    border-radius: 1rem;
+}
+
+.changeWrapper > div:hover{
+    scale: 1.05;
+    transition-duration: 100ms;
+    transition-timing-function: ease-in-out;
+}
+
+.goback{
+    color: var(--primaryGreen);
+    font-family: Inter;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+}
+
+.resultText{
+    font-family: Inter;
+    font-size: 1.5rem;
+}
+
+.deleteSpan{
+    color: red;
+}
+
+.addSpan{
+    color: green;
+}
+
+.normalSpan{
+    color: black;
+}

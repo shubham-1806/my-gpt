@@ -24,6 +24,9 @@ const Header = () => {
                             <li style={{cursor:"pointer"}}>
                                 <a onClick={()=>navigate("/summary")}>Summarise</a>
                             </li>
+                            <li style={{cursor:"pointer"}}>
+                                <a onClick={()=>navigate("/grammer")}>Grammer Check</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
