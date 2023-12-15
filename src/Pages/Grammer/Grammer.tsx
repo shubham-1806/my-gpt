@@ -15,10 +15,10 @@ const Grammer = () => {
     const [loading, setLoading] =
     useState<boolean>(false);
     const [text, setText] = useState<string>(
-        "did you no that bats are mammals. we no they are mammals just lik us becaus they are warm blooded they are the only mammals that no how to fly bats are Nocturnal which means thay sleep during the day and are awak at nite?."
+        ""
     );
     const [result, setResult] = useState<string>(
-        "you know that bats are mammals? We know this because they are mammals just like us because they are warm-blooded, and they are the only mammals that know how to fly. Bats are nocturnal, which meanflys they sleep  the day and are awake at night."
+        ""
     );
     const [resultArray, setResultArray] = useState<spanTag[]>([]);
     const [changesArray, setChangesArray] = useState<changesTag>({});
@@ -59,23 +59,29 @@ const Grammer = () => {
     };
 
     const onClickHandler = (id:string) => {
-        document
-            .getElementById(id)
-            ?.scrollIntoView({
+        const list = document.getElementsByClassName("back");
+        for(let i=0;i<list.length;i++){
+            (list[i] as HTMLElement).style.scale = "1";
+        }
+
+        const element = document.getElementById(id);
+        if(element){
+            element.scrollIntoView({
                 behavior: "smooth",
                 block: "center",
                 inline: "center",
             });
+            element.style.scale = "1.05";
+        }
 
     };
 
     const startReview = async () => {
-
         setLoading(true);
         // api logic to get result
         setLoading(false);
         setMode("review");
-        setResult("result");
+        setResult("value from api");
 
         const diff = diffWords(text, result);
         let skip = false;
@@ -137,15 +143,19 @@ const Grammer = () => {
             {mode === "upload" ? (
                 <div className={style.uploadWrapper}>
                     {loading ? <Loader /> : null}
-                    <input
-                        type="text"
+                    <h1 className={style.dropTitle}>Grammer Checker</h1>
+                    <p className={style.subtext}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium assumenda maxime aliquam, soluta ipsam est quod minus eligendi. Voluptas aperiam quasi facilis, neque labore temporibus ad illo dicta nostrum sunt ratione incidunt.</p>
+                    <textarea
                         placeholder="Enter your text here"
                         value={text}
+                        spellCheck={false}
                         onChange={(e) => {
-                            setText(e.currentTarget.value);
+                            setText(e.target.value);
                         }}
                     />
-                    <button onClick={() => startReview()}>Grammer Check</button>
+                    <button className={style.try} onClick={() => startReview()}>
+                        Fix It Up !
+                    </button>
                 </div>
             ) : (
                 <div className={style.reviewWrapper}>

@@ -11,6 +11,11 @@ const Swap = ({ changesArray, item, addSpan, deleteSpan }: Props) => {
     const [toggle, setToggle] = useState<boolean>(false);
 
     const onClickHandler = () => {
+        const list = document.getElementsByClassName("back");
+        for(let i=0;i<list.length;i++){
+            (list[i] as HTMLElement).style.scale = "1";
+        }
+        
         document
             .getElementById(changesArray[item][0].id)
             ?.scrollIntoView({
@@ -25,7 +30,7 @@ const Swap = ({ changesArray, item, addSpan, deleteSpan }: Props) => {
     return (
         <div
             id={"button"+changesArray[item][0].id.split(".")[0]}
-            className={style.chain}
+            className={style.chain + " back"}
             key={item}
             style={{ cursor: toggle ? "default" : "pointer" }}
             onClick={() => {
