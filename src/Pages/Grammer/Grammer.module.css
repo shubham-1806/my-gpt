@@ -1,0 +1,180 @@
+.mainContainer{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--lightBG);
+    overflow-y: clip;
+}
+
+.uploadWrapper{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-family: Inter;
+}
+
+.uploadWrapper textarea{
+    width: 90%;
+    height: 40vh;
+    border-radius: 20px;
+    padding: 1rem;
+    font-family: Inter;
+    font-size: 1.1rem;
+    margin: 2rem;
+    position: relative;
+}
+
+
+.uploadWrapper textarea:focus{
+    outline: var(--primaryGreen) solid 2px;
+
+}
+
+
+.reviewWrapper{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.resultWrapper{
+    flex-basis: 60%;
+    background-color: #f0f0f0;
+    height: 85vh;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    padding: 2rem;
+    /* font-size: 10rem; */
+}
+
+.changeWrapper{
+    box-sizing: border-box;
+    margin:0 1rem;
+    flex-basis: 40%;
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    font-family: Inter;
+    font-size: 1.5rem;
+    height: 85vh;
+    overflow-y: scroll;
+}
+
+.changeWrapper > div{
+    box-sizing: border-box;
+    padding: 3rem 2rem;
+    width: 80%;
+    border-radius: 1rem;
+}
+
+.changeWrapper > div:hover{
+    scale: 1.05;
+    transition-duration: 100ms;
+    transition-timing-function: ease-in-out;
+}
+
+.goback{
+    color: var(--primaryGreen);
+    font-family: Inter;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resultText{
+    font-family: Inter;
+    font-size: 1.5rem;
+}
+
+.deleteSpan{
+    color: grey;
+    text-decoration: line-through underline;
+    text-decoration-color: red;
+    
+}
+
+.addSpan{
+    color: green;
+    text-decoration: underline;
+    text-decoration-color: green;
+}
+
+.normalSpan{
+    color: black;
+}
+
+.addSpan:hover, .addSpanHighlight{
+    background-color: rgba(0, 128, 0, 0.2);
+}
+
+.deleteSpan:hover, .deleteSpanHighlight{
+    background-color: rgba(255, 15, 15, 0.2);
+}
+
+.try{
+    margin-top: 2rem;
+    border-radius: 2.25rem;
+    background: var(--primaryGreen);
+    display: inline-flex;
+    padding: 1.25rem 3.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    color: var(--lightBG);
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+    cursor: pointer;
+}
+
+.dropTitle{
+    color: var(--text);
+    font-family: Inter;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 550;
+    line-height: normal;
+    padding: 0;
+    margin: 0;
+}
+
+.subtext{
+    width: 80%;
+    color: var(--text);
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-align: center;
+}
+
+.try:hover{
+    scale: 1.05;
+    transition-duration: 100ms;
+}
+
+.activeBox{
+    scale: 1.05;
+}
+
+.resultText:focus{
+    outline: none;
+}
+

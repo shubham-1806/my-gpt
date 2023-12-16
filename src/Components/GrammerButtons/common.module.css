@@ -1,0 +1,45 @@
+.accept{
+    cursor: pointer;
+    color: var(--lightBG);
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    border-radius: 20px;
+    padding: 0.75rem 2rem;
+    background: var(--primaryGreen);
+    min-width: none;
+}
+
+.reject{
+    cursor: pointer;
+    color: rgba(30, 30, 30, 0.75);
+    text-transform: uppercase;
+    font-size: 0.5rem;
+}
+
+.buttonWrapper{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
+.resolved{
+    background-color: grey;
+}
+
+.chain{
+    background-color: var(--rephrase);
+}
+
+.delete{
+    background-color: var(--delete);
+}
+
+.add{
+    background-color: var(--add);
+}
+
+.activeBox{
+    scale: 1.05;
+}
