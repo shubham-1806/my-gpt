@@ -89,6 +89,9 @@
     font-size: 1.3rem;
     margin-bottom: 2rem;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .resultText{
@@ -166,3 +169,12 @@
     scale: 1.05;
     transition-duration: 100ms;
 }
+
+.activeBox{
+    scale: 1.05;
+}
+
+.resultText:focus{
+    outline: none;
+}
+

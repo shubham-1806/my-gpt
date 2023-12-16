@@ -39,3 +39,7 @@
 .add{
     background-color: var(--add);
 }
+
+.activeBox{
+    scale: 1.05;
+}

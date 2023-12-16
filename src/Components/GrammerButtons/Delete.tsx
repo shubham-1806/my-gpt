@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./common.module.css";
 
 interface Props {
@@ -6,30 +6,37 @@ interface Props {
   item: string;
   addSpan: (position: string, id: string) => void;
   deleteSpan: (position: string, id: string) => void;
+  active: boolean;
+  setActiveId: React.Dispatch<React.SetStateAction<string>>;
 }
-const Delete = ({ changesArray, item, addSpan, deleteSpan }: Props) => {
+const Delete = ({ changesArray, item, addSpan, deleteSpan, active, setActiveId }: Props) => {
     const [toggle, setToggle] = useState<boolean>(false);
 
     const onClickHandler = () => {
+        setActiveId(item)
         const list = document.getElementsByClassName("back");
         for(let i=0;i<list.length;i++){
-            (list[i] as HTMLElement).style.scale = "1";
+            (list[i] as HTMLElement).classList.remove(style.activeBox);
         }
+
+        const ded = document.querySelector(`[data-val="${item}"]`)
+        ded?.classList.add(style.activeBox)
         
         document
-            .getElementById(changesArray[item][0].id)
+            .querySelector(`[data-id="${item}"]`)
             ?.scrollIntoView({
                 behavior: "smooth",
                 block: "center",
                 inline: "center",
             });
-
-        setToggle((prev) => !prev);
     };
+
+    useEffect(()=>{setToggle(active)},[active])
 
     return (
         <div
             id={"button"+changesArray[item][0].id.split(".")[0]}
+            data-val={changesArray[item][0].id.split(".")[0]}
             className={style.delete + " back"}
             key={item}
             style={{ cursor: toggle ? "default" : "pointer" }}
