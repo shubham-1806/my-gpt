@@ -8,6 +8,7 @@ import {
     pageToWindowEvents,
 } from "../../Config/eventConfig";
 import { ModelCommunicationResponse } from "../../Config/types";
+import toast from "react-hot-toast";
 
 const Summary = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,7 +78,9 @@ const Summary = () => {
                     });
                 }
                 else{
-                    //error logic bro
+                    toast.error(message.content,{
+                        duration: 5000
+                    });
                 }
             }
         );
