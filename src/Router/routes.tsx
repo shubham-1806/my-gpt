@@ -23,7 +23,7 @@ const routes: RouteType[] = [
         element: <Summary/>
     },
     {
-        path: '/grammer',
+        path: '/grammar',
         element: <Grammer />
     }
 
