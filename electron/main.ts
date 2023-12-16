@@ -2,6 +2,8 @@ import { app, BrowserWindow,ipcMain } from "electron";
 import path from "node:path";
 import amqp, { Message } from "amqplib/callback_api";
 import { research_paper_consumer_queue, research_paper_producer_queue } from "../src/Config/config.ts";
+import { windowToPageEvents,pageToWindowEvents } from "../src/Config/eventConfig.ts";
+import { ModelCommunicationMessage, ModelCommunicationResponse } from "../src/Config/types";
 
 let rabbitmqconnection: amqp.Connection | null = null;
 
@@ -54,23 +56,53 @@ function createWindow() {
                 const consuming_queue = research_paper_consumer_queue;
                 const producing_queue = research_paper_producer_queue;
                 channel.assertQueue(consuming_queue, { durable: true });
+                //send only the required fields from the json to the pages please
                 channel.consume(consuming_queue, function (msg: Message | null) {
                     if (msg && msg.content) {
-                        console.log(" [x] Received %s", msg.content.toString());
-                        win?.webContents.send(
-                            "gpt-message",
-                            msg.content.toString()
-                        );
+                        try{
+                            const response = JSON.parse(msg.content.toString()) as ModelCommunicationResponse;
+                            if(response.type === 'summary'){
+                                win?.webContents.send(
+                                    windowToPageEvents.SummariseEvent,
+                                    response
+                                );
+                            }
+                            else if(response.type === 'grammar'){
+                                win?.webContents.send(
+                                    windowToPageEvents.GrammarCheckEvent,
+                                    response
+                                );
+                            }
+                            else{
+                                throw new Error("Unknown type of response")
+                            }
+                        }
+                        catch(err) {
+                            console.log("error parsing", err)
+                        }
                         channel.ack(msg);
                     }
                 });
 
-                // Test active push message to Renderer-process.
-                ipcMain.on("gpt-send", (_event, filePath) => {
-                    console.log("wanna send", filePath);
+                //Events which trigger when the app wants to send messages to model
+                ipcMain.on(pageToWindowEvents.SummariseEvent, (_event, filePath) => {
+                    const messageToSend : ModelCommunicationMessage = {
+                        type: "summary",
+                        content: filePath
+                    }
                     channel.assertQueue(producing_queue, { durable: true });
-                    channel.sendToQueue(producing_queue, Buffer.from(filePath));
+                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
                 });
+
+                ipcMain.on(pageToWindowEvents.GrammarCheckEvent, (_event, content) => {
+                    const messageToSend : ModelCommunicationMessage = {
+                        type: "grammar",
+                        content: content
+                    }
+                    channel.assertQueue(producing_queue, { durable: true });
+                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
+                });
+    
             });
         }
     );

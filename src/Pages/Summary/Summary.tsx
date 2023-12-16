@@ -3,8 +3,11 @@ import { Header, Loader } from "../../Components";
 import style from "./Summary.module.css";
 import x from "../../assets/x.svg";
 import { useNavigate } from "react-router-dom";
-
-
+import {
+    windowToPageEvents,
+    pageToWindowEvents,
+} from "../../Config/eventConfig";
+import { ModelCommunicationResponse } from "../../Config/types";
 
 const Summary = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,7 +23,7 @@ const Summary = () => {
 
     const summarise = () => {
         setLoading(true);
-        window.ipcRenderer.send("gpt-send", filePath);
+        window.ipcRenderer.send(pageToWindowEvents.SummariseEvent, filePath);
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,7 +36,7 @@ const Summary = () => {
     };
 
     useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const drop = (event: any) => {
             event.preventDefault();
             event.stopPropagation();
@@ -64,11 +67,20 @@ const Summary = () => {
         element.addEventListener("dragover", dragover);
         element.addEventListener("dragenter", dragenter);
         element.addEventListener("dragleave", dragleave);
-        window.ipcRenderer.addListener("gpt-message", (_event, message) => {
-            console.log("bro listener called bro")
-            setLoading(false);
-            navigate("/result", { state: { name: 'Summary', data: message } });
-        });
+        window.ipcRenderer.addListener(
+            windowToPageEvents.SummariseEvent,
+            (_event, message: ModelCommunicationResponse) => {
+                setLoading(false);
+                if (message.status === "success") {
+                    navigate("/result", {
+                        state: { name: "Summary", data: message.content },
+                    });
+                }
+                else{
+                    //error logic bro
+                }
+            }
+        );
 
         return () => {
             if (element) {
@@ -77,7 +89,9 @@ const Summary = () => {
                 element.removeEventListener("dragenter", dragenter);
                 element.removeEventListener("dragleave", dragleave);
             }
-            window.ipcRenderer.removeAllListeners("gpt-message");
+            window.ipcRenderer.removeAllListeners(
+                windowToPageEvents.SummariseEvent
+            );
         };
     }, [navigate]);
 
@@ -90,20 +104,32 @@ const Summary = () => {
         <div className={style.mainContainer}>
             <Header />
             <div className={style.dropWrapper}>
-                <h1 className={style.dropTitle}>Summarise a Research Paper or an Article</h1>
+                <h1 className={style.dropTitle}>
+                    Summarise a Research Paper or an Article
+                </h1>
                 <p className={style.subtext}>
-          Summarise any article or research paper, and accelerate your reading and learning with
-          our AI technology. Perfect also for research papers, screening articles and reviewing 
-          communication.
+                    Summarise any article or research paper, and accelerate your
+                    reading and learning with our AI technology. Perfect also
+                    for research papers, screening articles and reviewing
+                    communication.
                 </p>
                 <div className={style.dropBox}>
                     <div className={style.dropBoxInner} ref={dropBoxRef}>
                         {file ? (
                             <>
-                                <img src={x} className={style.cross} onClick={() => reset()} />
+                                <img
+                                    src={x}
+                                    className={style.cross}
+                                    onClick={() => reset()}
+                                />
                                 <h1 className={style.fileName}>{fileName}</h1>
-                                <button className={style.try} onClick={() => summarise()}>
-                                    {loading ? "Summarising..." : "Summarise the Document?"}
+                                <button
+                                    className={style.try}
+                                    onClick={() => summarise()}
+                                >
+                                    {loading
+                                        ? "Summarising..."
+                                        : "Summarise the Document?"}
                                 </button>
                                 {loading ? <Loader /> : null}
                             </>
@@ -120,10 +146,12 @@ const Summary = () => {
                                     className={style.try}
                                     onClick={() => inputRef.current.click()}
                                 >
-                  Upload a Document
+                                    Upload a Document
                                 </button>
                                 <h2 className={style.or}>OR</h2>
-                                <h1 className={style.muted}>Drop a File</h1>{" "}
+                                <h1 className={style.muted}>
+                                    Drop a File
+                                </h1>{" "}
                             </>
                         )}
                     </div>
