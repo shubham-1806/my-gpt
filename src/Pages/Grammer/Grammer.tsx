@@ -103,10 +103,6 @@ const Grammer = () => {
 
     const sendReviewRequest = async () => {
         setLoading(true);
-        // startReview(
-        //     text,
-        //     "Did you know that bats are mammals? We know this because they are mammals just like us because they are warm-blooded, and they are the only mammals that know how to fly. Bats are nocturnal, which means they sleep during the day and are awake at night."
-        // );
         window.ipcRenderer.send(pageToWindowEvents.GrammarCheckEvent, text);
     };
 
@@ -219,10 +215,6 @@ const Grammer = () => {
         // setResultArray([]);
         setChangesArray({});
         setLoading(true);
-        // startReview(
-        //     newText,
-        //     "Did you know that bats are mammals? We know this because they are mammals just like us because they are warm-blooded, and they are the only mammals that know how to fly. Bats are nocturnal, which means they sleep during the day and are awake at night. coz imma"
-        // );
         window.ipcRenderer.send(pageToWindowEvents.GrammarCheckEvent, newText);
     };
 
