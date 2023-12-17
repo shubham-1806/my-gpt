@@ -8,6 +8,11 @@ import { windowToPageEvents, pageToWindowEvents } from '../../Config/eventConfig
 import { ModelCommunicationResponse } from '../../Config/types';
 import toast from 'react-hot-toast';
 
+export interface ChatHistory {
+    query: string;
+    chat_history: string[];
+}
+
 interface ChatBubbleProps {
     agent: 'user' | 'bot';
     message: string;
@@ -32,36 +37,11 @@ const Chat = () => {
             setChatMessages(state);
             setId(state.length);
         }
-
-        window.ipcRenderer.addListener(
-            windowToPageEvents.ChatEvent,
-            (_event, message: ModelCommunicationResponse) => {
-                setLoading(false);
-                setBotTurn(false);
-                if (message.status === 'success') {
-                    setChatMessages([
-                        ...chatMessages,
-                        {
-                            agent: 'bot',
-                            message: message.content,
-                            isUpload: false,
-                            id: id.toString(),
-                        },
-                    ]);
-                    setId(id + 1);
-                } else {
-                    toast.error(message.content);
-                }
-            },
-        );
-
-        return () => {
-            window.ipcRenderer.removeAllListeners(windowToPageEvents.ChatEvent);
-        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const addUserChatBubble = (message: string) => {
+        const chatHistory = chatMessages.map(chatMessage => chatMessage.message);
         setChatMessages([
             ...chatMessages,
             {
@@ -71,7 +51,12 @@ const Chat = () => {
                 id: id.toString(),
             },
         ]);
-        window.ipcRenderer.send(pageToWindowEvents.ChatEvent,message)
+        console.log(chatHistory);
+        const messageToSend: ChatHistory = {
+            query: message,
+            chat_history: chatHistory,
+        };
+        window.ipcRenderer.send(pageToWindowEvents.ChatEvent, messageToSend);
         messageRef.current!.value = '';
         setId(id + 1);
         setBotTurn(true);
@@ -90,6 +75,7 @@ const Chat = () => {
         ]);
         setId(id + 1);
         setBotTurn(true);
+        setLoading(true);
         window.ipcRenderer.send(pageToWindowEvents.UploadChatDocument, filePath);
     };
 
@@ -100,6 +86,35 @@ const Chat = () => {
         const splitName = splitPath[splitPath.length - 1];
         addUserChatBubbleOnFileUpload(filePath, splitName);
     };
+
+    useEffect(() => {
+        window.ipcRenderer.addListener(
+            windowToPageEvents.ChatEvent,
+            (_event, message: ModelCommunicationResponse) => {
+                setLoading(false);
+                setBotTurn(false);
+                console.log(message);
+                console.log(chatMessages);
+                if (message.status === 'success') {
+                    setChatMessages([
+                        ...chatMessages,
+                        {
+                            agent: 'bot',
+                            message: message.content,
+                            isUpload: false,
+                            id: id.toString(),
+                        },
+                    ]);
+                    setId(id + 1);
+                } else {
+                    toast.error(message.content);
+                }
+            },
+        );
+        return () => {
+            window.ipcRenderer.removeAllListeners(windowToPageEvents.ChatEvent);
+        };
+    },[chatMessages,id]);
 
     useEffect(() => {
         const scrollArray = document.getElementsByClassName('spacerToView');

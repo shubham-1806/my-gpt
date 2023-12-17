@@ -1,9 +1,13 @@
-import { app, BrowserWindow,ipcMain } from "electron";
-import path from "node:path";
-import amqp, { Message } from "amqplib/callback_api";
-import { research_paper_consumer_queue, research_paper_producer_queue } from "../src/Config/config.ts";
-import { windowToPageEvents,pageToWindowEvents } from "../src/Config/eventConfig.ts";
-import { ModelCommunicationMessage, ModelCommunicationResponse } from "../src/Config/types";
+import { app, BrowserWindow, ipcMain } from 'electron';
+import path from 'node:path';
+import amqp, { Message } from 'amqplib/callback_api';
+import {
+    research_paper_consumer_queue,
+    research_paper_producer_queue,
+} from '../src/Config/config.ts';
+import { windowToPageEvents, pageToWindowEvents } from '../src/Config/eventConfig.ts';
+import { ModelCommunicationMessage, ModelCommunicationResponse } from '../src/Config/types';
+import { ChatHistory } from '../src/Pages/Chat/Chat.tsx';
 
 let rabbitmqconnection: amqp.Connection | null = null;
 
@@ -16,29 +20,29 @@ let rabbitmqconnection: amqp.Connection | null = null;
 // │ │ ├── main.js
 // │ │ └── preload.js
 // │
-process.env.DIST = path.join(__dirname, "../dist");
+process.env.DIST = path.join(__dirname, '../dist');
 process.env.VITE_PUBLIC = app.isPackaged
     ? process.env.DIST
-    : path.join(process.env.DIST, "../public");
+    : path.join(process.env.DIST, '../public');
 
 let win: BrowserWindow | null;
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
-const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
+const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
 
 function createWindow() {
-    console.log(path.join(__dirname, "/logo.svg"))
+    console.log(path.join(__dirname, '/logo.svg'));
     win = new BrowserWindow({
-        icon: path.join(process.env.VITE_PUBLIC, "/logo.svg"),
+        icon: path.join(process.env.VITE_PUBLIC, '/logo.svg'),
         // frame: false,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            preload: path.join(__dirname, 'preload.js'),
         },
     });
-    win.menuBarVisible = false
+    win.menuBarVisible = false;
     win.maximize();
 
     amqp.connect(
-        "amqp://localhost",
+        'amqp://localhost',
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         function (error0: any, connection: amqp.Connection) {
             if (error0) {
@@ -48,7 +52,7 @@ function createWindow() {
             connection.createChannel(function (
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 error1: any,
-                channel: amqp.Channel
+                channel: amqp.Channel,
             ) {
                 if (error1) {
                     throw error1;
@@ -59,32 +63,24 @@ function createWindow() {
                 //send only the required fields from the json to the pages please
                 channel.consume(consuming_queue, function (msg: Message | null) {
                     if (msg && msg.content) {
-                        try{
-                            const response = JSON.parse(msg.content.toString()) as ModelCommunicationResponse;
-                            if(response.type === 'summary'){
-                                win?.webContents.send(
-                                    windowToPageEvents.SummariseEvent,
-                                    response
-                                );
-                            }
-                            else if(response.type === 'grammar'){
+                        try {
+                            const response = JSON.parse(
+                                msg.content.toString(),
+                            ) as ModelCommunicationResponse;
+                            if (response.type === 'summary') {
+                                win?.webContents.send(windowToPageEvents.SummariseEvent, response);
+                            } else if (response.type === 'grammar') {
                                 win?.webContents.send(
                                     windowToPageEvents.GrammarCheckEvent,
-                                    response
+                                    response,
                                 );
+                            } else if (response.type === 'chat' || response.type === 'upload') {
+                                win?.webContents.send(windowToPageEvents.ChatEvent, response);
+                            } else {
+                                throw new Error('Unknown type of response');
                             }
-                            else if(response.type === 'chat' || response.type === 'upload'){
-                                win?.webContents.send(
-                                    windowToPageEvents.ChatEvent,
-                                    response
-                                );
-                            }
-                            else{
-                                throw new Error("Unknown type of response")
-                            }
-                        }
-                        catch(err) {
-                            console.log("error parsing", err)
+                        } catch (err) {
+                            console.log('error parsing', err);
                         }
                         channel.ack(msg);
                     }
@@ -92,43 +88,55 @@ function createWindow() {
 
                 //Events which trigger when the app wants to send messages to model
                 ipcMain.on(pageToWindowEvents.SummariseEvent, (_event, filePath) => {
-                    const messageToSend : ModelCommunicationMessage = {
-                        type: "summary",
-                        content: filePath
-                    }
+                    const messageToSend: ModelCommunicationMessage = {
+                        type: 'summary',
+                        content: filePath,
+                    };
                     channel.assertQueue(producing_queue, { durable: true });
-                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
+                    channel.sendToQueue(
+                        producing_queue,
+                        Buffer.from(JSON.stringify(messageToSend)),
+                    );
                 });
 
                 ipcMain.on(pageToWindowEvents.GrammarCheckEvent, (_event, content) => {
-                    const messageToSend : ModelCommunicationMessage = {
-                        type: "grammar",
-                        content: content
-                    }
+                    const messageToSend: ModelCommunicationMessage = {
+                        type: 'grammar',
+                        content: content,
+                    };
                     channel.assertQueue(producing_queue, { durable: true });
-                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
+                    channel.sendToQueue(
+                        producing_queue,
+                        Buffer.from(JSON.stringify(messageToSend)),
+                    );
                 });
 
-                ipcMain.on(pageToWindowEvents.UploadChatDocument,(_event,filePath) => {
-                    const messageToSend : ModelCommunicationMessage = {
-                        type : "upload",
-                        content : filePath
-                    }
+                ipcMain.on(pageToWindowEvents.UploadChatDocument, (_event, filePath) => {
+                    const messageToSend: ModelCommunicationMessage = {
+                        type: 'upload',
+                        content: filePath,
+                    };
                     channel.assertQueue(producing_queue, { durable: true });
-                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
+                    channel.sendToQueue(
+                        producing_queue,
+                        Buffer.from(JSON.stringify(messageToSend)),
+                    );
                 });
 
-                ipcMain.on(pageToWindowEvents.ChatEvent,(_event,content) => {
-                    const messageToSend : ModelCommunicationMessage = {
-                        type : "chat",
-                        content : content
-                    }
+                ipcMain.on(pageToWindowEvents.ChatEvent, (_event, content: ChatHistory) => {
+                    const messageToSend: ModelCommunicationMessage = {
+                        type: 'chat',
+                        query: content.query,
+                        chat_history: content.chat_history,
+                    };
                     channel.assertQueue(producing_queue, { durable: true });
-                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
+                    channel.sendToQueue(
+                        producing_queue,
+                        Buffer.from(JSON.stringify(messageToSend)),
+                    );
                 });
-    
             });
-        }
+        },
     );
 
     if (VITE_DEV_SERVER_URL) {
@@ -137,7 +145,7 @@ function createWindow() {
     } else {
         // win.loadFile('dist/index.html')
         // win.loadURL("https://github.com")
-        win.loadFile(path.join(process.env.DIST, "index.html"));
+        win.loadFile(path.join(process.env.DIST, 'index.html'));
     }
 }
 
@@ -149,17 +157,17 @@ app.commandLine.appendSwitch('disable-gpu-compositing');
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
-    if(rabbitmqconnection !== null) {
+app.on('window-all-closed', () => {
+    if (rabbitmqconnection !== null) {
         rabbitmqconnection.close();
     }
-    if (process.platform !== "darwin") {
+    if (process.platform !== 'darwin') {
         app.quit();
         win = null;
     }
 });
 
-app.on("activate", () => {
+app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {

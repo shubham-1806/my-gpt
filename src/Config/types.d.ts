@@ -1,6 +1,8 @@
 export type ModelCommunicationMessage = {
     type: 'summary' | 'grammar' | 'chat' | 'upload';
-    content: string;
+    content?: string;
+    query?: string;
+    chat_history?: string[];
 };
 
 export type ModelCommunicationResponse = {
