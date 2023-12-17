@@ -73,6 +73,12 @@ function createWindow() {
                                     response
                                 );
                             }
+                            else if(response.type === 'chat' || response.type === 'upload'){
+                                win?.webContents.send(
+                                    windowToPageEvents.ChatEvent,
+                                    response
+                                );
+                            }
                             else{
                                 throw new Error("Unknown type of response")
                             }
@@ -98,6 +104,24 @@ function createWindow() {
                     const messageToSend : ModelCommunicationMessage = {
                         type: "grammar",
                         content: content
+                    }
+                    channel.assertQueue(producing_queue, { durable: true });
+                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
+                });
+
+                ipcMain.on(pageToWindowEvents.UploadChatDocument,(_event,filePath) => {
+                    const messageToSend : ModelCommunicationMessage = {
+                        type : "upload",
+                        content : filePath
+                    }
+                    channel.assertQueue(producing_queue, { durable: true });
+                    channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));
+                });
+
+                ipcMain.on(pageToWindowEvents.ChatEvent,(_event,content) => {
+                    const messageToSend : ModelCommunicationMessage = {
+                        type : "chat",
+                        content : content
                     }
                     channel.assertQueue(producing_queue, { durable: true });
                     channel.sendToQueue(producing_queue, Buffer.from(JSON.stringify(messageToSend)));

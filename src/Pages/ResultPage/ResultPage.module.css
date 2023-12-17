@@ -1,4 +1,4 @@
-.mainContainer{
+.mainContainer {
     padding: 0;
     margin: 0;
     display: flex;
@@ -9,9 +9,9 @@
 }
 
 .resultContainer {
-    padding: 0 3rem 0 ;
+    padding: 0 3rem 0;
 }
-.resultContainer h1{
+.resultContainer h1 {
     margin: 3rem 0;
     font-family: Inter;
     text-align: left;
@@ -21,7 +21,7 @@
     font-size: 2.5rem;
 }
 
-.resultContainer p{
+.resultContainer p {
     font-family: Inter;
     text-align: left;
     font-style: normal;

@@ -5,9 +5,8 @@ interface spanTag {
     color: string;
     id: string;
     resolved: boolean;
-  }
-  
-  interface changesTag {
+}
+
+interface changesTag {
     [key: string]: spanTag[];
-  }
-  
+}

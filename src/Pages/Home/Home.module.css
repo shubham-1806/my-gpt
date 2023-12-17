@@ -1,4 +1,4 @@
-.mainContainer{
+.mainContainer {
     padding: 0;
     margin: 0;
     display: flex;
@@ -9,7 +9,7 @@
     overflow-y: clip;
 }
 
-.home{
+.home {
     width: 80%;
     display: flex;
     flex-direction: row;
@@ -18,14 +18,13 @@
     margin: auto;
 }
 
-.home div{
+.home div {
     flex-basis: 50%;
     width: 40%;
-    
 }
 
 .grad {
-    background: linear-gradient(101deg, #0C746E -3.34%, #7189C5 77.45%);
+    background: linear-gradient(101deg, #0c746e -3.34%, #7189c5 77.45%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -38,7 +37,7 @@
     user-select: none;
 }
 
-.subtext{
+.subtext {
     color: var(--text);
     font-family: Inter;
     font-size: 1.5rem;
@@ -49,7 +48,7 @@
     user-select: none;
 }
 
-.try{
+.try {
     border-radius: 2.25rem;
     background: var(--primaryGreen);
     display: inline-flex;

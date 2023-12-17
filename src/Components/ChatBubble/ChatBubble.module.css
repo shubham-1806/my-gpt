@@ -1,10 +1,10 @@
-.bubbleWrapper{
+.bubbleWrapper {
     width: 100%;
     display: flex;
     align-items: center;
 }
 
-.bubble{
+.bubble {
     width: 50%;
     background-color: var(--text-box);
     box-sizing: border-box;

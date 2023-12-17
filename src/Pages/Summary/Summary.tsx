@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { Header, Loader } from "../../Components";
-import style from "./Summary.module.css";
-import x from "../../assets/x.svg";
-import { useNavigate } from "react-router-dom";
-import {
-    windowToPageEvents,
-    pageToWindowEvents,
-} from "../../Config/eventConfig";
-import { ModelCommunicationResponse } from "../../Config/types";
-import toast from "react-hot-toast";
+import { useEffect, useRef, useState } from 'react';
+import { Header, Loader } from '../../Components';
+import style from './Summary.module.css';
+import x from '../../assets/x.svg';
+import { useNavigate } from 'react-router-dom';
+import { windowToPageEvents, pageToWindowEvents } from '../../Config/eventConfig';
+import { ModelCommunicationResponse } from '../../Config/types';
+import toast from 'react-hot-toast';
 
 const Summary = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,8 +14,8 @@ const Summary = () => {
     const inputRef = useRef<any>(null);
 
     const navigate = useNavigate();
-    const [fileName, setFileName] = useState<string>("");
-    const [filePath, setFilePath] = useState<string>("");
+    const [fileName, setFileName] = useState<string>('');
+    const [filePath, setFilePath] = useState<string>('');
     const [file, setFile] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -29,9 +26,9 @@ const Summary = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const uploadFile = (e: any) => {
-        dropBoxRef.current.style.background = "#EAEAEA";
+        dropBoxRef.current.style.background = '#EAEAEA';
         setFilePath(e.target.files[0].path);
-        const splitPath = e.target.files[0].path.split("/");
+        const splitPath = e.target.files[0].path.split('/');
         setFileName(splitPath[splitPath.length - 1]);
         setFile(true);
     };
@@ -55,84 +52,69 @@ const Summary = () => {
         };
 
         const dragenter = () => {
-            dropBoxRef.current.style.background = "#EAEAEA";
+            dropBoxRef.current.style.background = '#EAEAEA';
         };
 
         const dragleave = () => {
-            dropBoxRef.current.style.background = "#EDF0EF";
+            dropBoxRef.current.style.background = '#EDF0EF';
         };
 
         const element = dropBoxRef.current;
 
-        element.addEventListener("drop", drop);
-        element.addEventListener("dragover", dragover);
-        element.addEventListener("dragenter", dragenter);
-        element.addEventListener("dragleave", dragleave);
+        element.addEventListener('drop', drop);
+        element.addEventListener('dragover', dragover);
+        element.addEventListener('dragenter', dragenter);
+        element.addEventListener('dragleave', dragleave);
         window.ipcRenderer.addListener(
             windowToPageEvents.SummariseEvent,
             (_event, message: ModelCommunicationResponse) => {
                 setLoading(false);
-                if (message.status === "success") {
-                    navigate("/result", {
-                        state: { name: "Summary", data: message.content },
+                if (message.status === 'success') {
+                    navigate('/result', {
+                        state: { name: 'Summary', data: message.content },
+                    });
+                } else {
+                    toast.error(message.content, {
+                        duration: 5000,
                     });
                 }
-                else{
-                    toast.error(message.content,{
-                        duration: 5000
-                    });
-                }
-            }
+            },
         );
 
         return () => {
             if (element) {
-                element.removeEventListener("drop", drop);
-                element.removeEventListener("dragover", dragover);
-                element.removeEventListener("dragenter", dragenter);
-                element.removeEventListener("dragleave", dragleave);
+                element.removeEventListener('drop', drop);
+                element.removeEventListener('dragover', dragover);
+                element.removeEventListener('dragenter', dragenter);
+                element.removeEventListener('dragleave', dragleave);
             }
-            window.ipcRenderer.removeAllListeners(
-                windowToPageEvents.SummariseEvent
-            );
+            window.ipcRenderer.removeAllListeners(windowToPageEvents.SummariseEvent);
         };
     }, [navigate]);
 
     const reset = () => {
         setFile(false);
-        setFileName("");
-        setFilePath("");
+        setFileName('');
+        setFilePath('');
     };
     return (
         <div className={style.mainContainer}>
             <Header />
             <div className={style.dropWrapper}>
-                <h1 className={style.dropTitle}>
-                    Summarise a Research Paper or an Article
-                </h1>
+                <h1 className={style.dropTitle}>Summarise a Research Paper or an Article</h1>
                 <p className={style.subtext}>
-                    Summarise any article or research paper, and accelerate your
-                    reading and learning with our AI technology. Perfect also
-                    for research papers, screening articles and reviewing
-                    communication.
+                    Summarise any article or research paper, and accelerate your reading and
+                    learning with our AI technology. Perfect also for research papers, screening
+                    articles and reviewing communication.
                 </p>
                 <div className={style.dropBox}>
                     <div className={style.dropBoxInner} ref={dropBoxRef}>
                         {file ? (
                             <>
-                                <img
-                                    src={x}
-                                    className={style.cross}
-                                    onClick={() => reset()}
-                                />
+                                <img src={x} className={style.cross} onClick={() => reset()} />
                                 <h1 className={style.fileName}>{fileName}</h1>
-                                <button
-                                    className={style.try}
-                                    onClick={() => summarise()}
-                                >
-                                    {loading
-                                        ? "Summarising..."
-                                        : "Summarise the Document?"}
+                                <button className={style.try} onClick={() => summarise()}>
+                                    {loading ? 'Summarising...' : 'Summarise the Document?'}
                                 </button>
                                 {loading ? <Loader /> : null}
                             </>
@@ -143,7 +125,7 @@ const Summary = () => {
                                     id="file"
                                     hidden
                                     ref={inputRef}
-                                    onChange={(e) => uploadFile(e)}
+                                    onChange={e => uploadFile(e)}
                                 />
                                 <button
                                     className={style.try}
@@ -152,9 +134,7 @@ const Summary = () => {
                                     Upload a Document
                                 </button>
                                 <h2 className={style.or}>OR</h2>
-                                <h1 className={style.muted}>
-                                    Drop a File
-                                </h1>{" "}
+                                <h1 className={style.muted}>Drop a File</h1>{' '}
                             </>
                         )}
                     </div>

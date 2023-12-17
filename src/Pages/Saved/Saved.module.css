@@ -1,4 +1,4 @@
-.mainContainer{
+.mainContainer {
     padding: 0;
     margin: 0;
     display: flex;
@@ -8,7 +8,7 @@
     overflow-y: clip;
 }
 
-.savedWrapper{
+.savedWrapper {
     width: 100%;
     display: flex;
     align-items: center;
@@ -16,7 +16,7 @@
     flex-flow: column-reverse nowrap;
 }
 
-.savedBox{
+.savedBox {
     z-index: 1;
     cursor: pointer;
     width: 80%;

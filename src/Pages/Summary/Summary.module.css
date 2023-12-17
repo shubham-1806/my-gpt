@@ -1,4 +1,4 @@
-.mainContainer{
+.mainContainer {
     padding: 0;
     margin: 0;
     display: flex;
@@ -9,7 +9,7 @@
     overflow-y: clip;
 }
 
-.dropWrapper{
+.dropWrapper {
     width: 100%;
     height: 100%;
     display: flex;
@@ -18,7 +18,7 @@
     justify-content: center;
 }
 
-.dropTitle{
+.dropTitle {
     color: var(--text);
     font-family: Inter;
     font-size: 2.5rem;
@@ -27,7 +27,7 @@
     line-height: normal;
 }
 
-.subtext{
+.subtext {
     width: 60%;
     color: var(--text);
     font-family: Inter;
@@ -38,14 +38,14 @@
     text-align: center;
 }
 
-.dropBox{
+.dropBox {
     margin: 2rem 0;
     width: 80%;
     height: 50%;
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='6' stroke-dasharray='8%2c 19' stroke-dashoffset='41' stroke-linecap='square'/%3e%3c/svg%3e");
 }
 
-.dropBoxInner{
+.dropBoxInner {
     margin: 10px auto;
     box-sizing: border-box;
     padding: 2rem 0;
@@ -59,7 +59,7 @@
     position: relative;
 }
 
-.try{
+.try {
     border-radius: 2.25rem;
     background: var(--primaryGreen);
     display: inline-flex;
@@ -77,7 +77,7 @@
     cursor: pointer;
 }
 
-.or{
+.or {
     margin-top: 2rem;
     color: var(--text);
     opacity: 0.5;
@@ -89,8 +89,8 @@
     position: relative;
 }
 
-.or::after{
-    content: "";
+.or::after {
+    content: '';
     opacity: 0.5;
     position: absolute;
     top: 50%;
@@ -100,8 +100,8 @@
     border-bottom: 2px var(--text) solid;
 }
 
-.or::before{
-    content: "";
+.or::before {
+    content: '';
     opacity: 0.5;
     position: absolute;
     top: 50%;
@@ -111,17 +111,17 @@
     border-bottom: 2px var(--text) solid;
 }
 
-.muted{
+.muted {
     color: var(--text);
     font-family: Inter;
     font-size: 1.75rem;
     font-style: normal;
     font-weight: 500;
-    line-height: normal;   
+    line-height: normal;
     opacity: 0.5;
 }
 
-.cross{
+.cross {
     position: absolute;
     top: 0;
     left: 0;
@@ -130,7 +130,7 @@
     margin: 10px;
 }
 
-.fileName{
+.fileName {
     color: var(--text);
     font-family: Inter;
     font-size: 1rem;

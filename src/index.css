@@ -1,33 +1,32 @@
+@font-face {
+    font-family: 'DMSerif';
+    src:
+        local('MyFont'),
+        url(/fonts/DMSerifText-Regular.ttf) format('truetype');
+}
 
 @font-face {
-  font-family: "DMSerif";
-  src: local("MyFont"),
-    url(/fonts/DMSerifText-Regular.ttf) format("truetype");
+    font-family: 'Inter';
+    src:
+        local('MyFont'),
+        url(/fonts/Inter-Regular.ttf) format('truetype');
 }
 
-@font-face {
-  font-family: "Inter";
-  src: local("MyFont"),
-    url(/fonts/Inter-Regular.ttf) format("truetype");
+:root {
+    --lightBG: #f1f3f3;
+    --primaryGreen: #0c746e;
+    --text: #1e1e1e;
+    --box-off-white: #edf0ef;
+    --rephrase: #d1ddfa;
+    --delete: #ffdada;
+    --add: #c1e1c1;
+    --box-off-white2: #e7ecec;
+    --text-box: #b5d1cf;
+    font-family: DMSerif;
 }
 
-:root{
-  --lightBG: #F1F3F3;
-  --primaryGreen: #0C746E;
-  --text: #1E1E1E;
-  --box-off-white: #EDF0EF;
-  --rephrase: #D1DDFA;
-  --delete: #FFDADA;
-  --add: #C1E1C1;
-  --box-off-white2: #E7ECEC;
-  --text-box: #B5D1CF;
-  font-family: DMSerif;
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-
-body{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
