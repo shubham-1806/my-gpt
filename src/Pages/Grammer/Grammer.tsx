@@ -39,7 +39,7 @@ const Grammer = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [text, setText] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_result, setResult] = useState<string>('');
+    const [_, setResult] = useState<string>("");
     const [resultArray, setResultArray] = useState<spanTag[]>([]);
     const [changesArray, setChangesArray] = useState<changesTag>({});
 
@@ -276,8 +276,8 @@ const Grammer = () => {
                                             item.color === style.addSpan
                                                 ? style.addSpanHighlight
                                                 : item.color === style.deleteSpan
-                                                  ? style.deleteSpanHighlight
-                                                  : 'none'
+                                                    ? style.deleteSpanHighlight
+                                                    : 'none'
                                         }
                                         data-content={
                                             item.id.split('.')[0] +
