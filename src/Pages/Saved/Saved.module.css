@@ -28,4 +28,20 @@
     opacity: 0.8;
     border-radius: 20px;
     background-color: var(--box-off-white2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icondiv{
+    display: flex;
+    gap: 2rem;
+}
+
+
+.icondiv img{
+    margin: 0;
+    padding: 0;
+    height: 30px;
+    width: 30px;
 }

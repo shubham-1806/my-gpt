@@ -5,7 +5,7 @@ import logo from '../../assets/logo.svg';
 import download from '../../assets/download.svg';
 import chat from '../../assets/chat.svg';
 import bookmark from '../../assets/bookmark.svg';
-import grammarChecklogo from '../../assets/GrammarCheckLogo.svg';
+// import grammarChecklogo from '../../assets/GrammarCheckLogo.svg';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Header = () => {
                             <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/summary')}>
                                     <img src={download} />
-                                    Upload a PDF to Summarise
+                                    Upload a File
                                 </a>
                             </li>
                             <li style={{ cursor: 'pointer' }}>
@@ -34,12 +34,12 @@ const Header = () => {
                                     Chat to Summarise
                                 </a>
                             </li>
-                            <li style={{ cursor: 'pointer' }}>
+                            {/* <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/grammar')}>
                                     <img src={grammarChecklogo} />
                                     Grammar Check
                                 </a>
-                            </li>
+                            </li> */}
                             <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/saved')}>
                                     <img src={bookmark} />
@@ -64,12 +64,6 @@ const Header = () => {
                                 <img src={logo} alt="logo" />
                                 <h2 className={style.title}>MyGPT</h2>
                             </div>
-                            <li style={{cursor:"pointer"}}>
-                                <a onClick={()=>navigate("/summary")}>File Uploads</a>
-                            </li>
-                            {/* <li style={{cursor:"pointer"}}>
-                                <a onClick={()=>navigate("/grammar")}>Grammar Check</a>
-                            </li> */}
                         </ul>
                     </div>
                 </div>
