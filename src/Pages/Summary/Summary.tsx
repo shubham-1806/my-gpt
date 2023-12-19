@@ -101,7 +101,9 @@ const Summary = () => {
         <div className={style.mainContainer}>
             <Header />
             <div className={style.dropWrapper}>
-                <h1 className={style.dropTitle}>Summarise a Research Paper or an Article</h1>
+                <h1 className={style.dropTitle}>
+                    Locally Upload a Research Paper or an Article
+                </h1>
                 <p className={style.subtext}>
                     Summarise any article or research paper, and accelerate your reading and
                     learning with our AI technology. Perfect also for research papers, screening

@@ -64,6 +64,12 @@ const Header = () => {
                                 <img src={logo} alt="logo" />
                                 <h2 className={style.title}>MyGPT</h2>
                             </div>
+                            <li style={{cursor:"pointer"}}>
+                                <a onClick={()=>navigate("/summary")}>File Uploads</a>
+                            </li>
+                            {/* <li style={{cursor:"pointer"}}>
+                                <a onClick={()=>navigate("/grammar")}>Grammar Check</a>
+                            </li> */}
                         </ul>
                     </div>
                 </div>
