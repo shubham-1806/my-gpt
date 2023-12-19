@@ -39,7 +39,7 @@ const Grammer = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [text, setText] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [result, setResult] = useState<string>('');
+    const [_result, setResult] = useState<string>('');
     const [resultArray, setResultArray] = useState<spanTag[]>([]);
     const [changesArray, setChangesArray] = useState<changesTag>({});
 
@@ -98,6 +98,7 @@ const Grammer = () => {
 
     const sendReviewRequest = async () => {
         setLoading(true);
+        // startReview(text, "'Did you know that bats are mammals? We know this because they are mammals just like us because they are warm-blooded, and they are the only mammals that know how to fly. Bats are nocturnal, which means they sleep during the day and are awake at night.");
         window.ipcRenderer.send(pageToWindowEvents.GrammarCheckEvent, text);
     };
 
@@ -202,10 +203,11 @@ const Grammer = () => {
         setMode('upload');
         setResult('');
         setText(newText);
-        (document.getElementById('resultText') as HTMLElement).innerText = '';
+        (document.getElementById('resultText') as HTMLElement).textContent = '';
         // setResultArray([]);
         setChangesArray({});
         setLoading(true);
+        // startReview(newText, "'Did you know that bats are mammals? We know this because they are mammals just like us because they are warm-blooded, and they are the only mammals that know how to fly. Bats are nocturnal, which means they sleep during the day and are awake at night.");
         window.ipcRenderer.send(pageToWindowEvents.GrammarCheckEvent, newText);
     };
 
@@ -265,12 +267,7 @@ const Grammer = () => {
                             </div>
                         </div>
 
-                        <div
-                            id="resultText"
-                            className={style.resultText}
-                            contentEditable="true"
-                            spellCheck="false"
-                        >
+                        <div id="resultText" className={style.resultText} spellCheck="false">
                             {resultArray.map((item, index) => {
                                 return (
                                     <span
@@ -279,12 +276,17 @@ const Grammer = () => {
                                             item.color === style.addSpan
                                                 ? style.addSpanHighlight
                                                 : item.color === style.deleteSpan
-                                                    ? style.deleteSpanHighlight
-                                                    : 'none'
+                                                  ? style.deleteSpanHighlight
+                                                  : 'none'
+                                        }
+                                        data-content={
+                                            item.id.split('.')[0] +
+                                            (item.color === style.deleteSpan).toString()
                                         }
                                         key={index}
                                         className={item.color}
                                         id={item.id}
+                                        contentEditable={item.color === style.deleteSpan}
                                         style={{
                                             cursor:
                                                 item.color !== style.normalSpan ? 'pointer' : '',
@@ -292,6 +294,25 @@ const Grammer = () => {
                                         onClick={() => {
                                             if (item.color !== style.normalSpan)
                                                 onClickHandler(item.id.split('.')[0]);
+                                        }}
+                                        onKeyDown={() => {
+                                            if (item.color === style.deleteSpan) {
+                                                const element = document.querySelector(
+                                                    `[data-content="${
+                                                        item.id.split('.')[0] +
+                                                        (item.color === style.deleteSpan).toString()
+                                                    }"]`,
+                                                );
+                                                if (element) {
+                                                    if (element.textContent?.length === 1) {
+                                                        deleteSpan(item.id.split('.')[0], item.id);
+                                                        deleteSpan(
+                                                            item.id.split('.')[0],
+                                                            item.id.split('.')[0] + '.added',
+                                                        );
+                                                    }
+                                                }
+                                            }
                                         }}
                                     >
                                         {item.text}
