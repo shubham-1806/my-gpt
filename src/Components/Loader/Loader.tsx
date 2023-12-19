@@ -1,8 +1,11 @@
-import style from "./Loader.module.css";
+import style from './Loader.module.css';
 
-const Loader = () => {
+interface Props {
+    rounded?: boolean;
+}
+const Loader = ({ rounded }: Props) => {
     return (
-        <div className={style.overlay}>
+        <div className={style.overlay} style={{ borderRadius: rounded ? '50px' : '0px' }}>
             <span className={style.loader}></span>
         </div>
     );

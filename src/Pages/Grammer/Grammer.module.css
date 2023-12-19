@@ -1,4 +1,4 @@
-.mainContainer{
+.mainContainer {
     padding: 0;
     margin: 0;
     display: flex;
@@ -9,7 +9,7 @@
     overflow-y: clip;
 }
 
-.uploadWrapper{
+.uploadWrapper {
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -19,7 +19,7 @@
     font-family: Inter;
 }
 
-.uploadWrapper textarea{
+.uploadWrapper textarea {
     width: 90%;
     height: 40vh;
     border-radius: 20px;
@@ -30,14 +30,11 @@
     position: relative;
 }
 
-
-.uploadWrapper textarea:focus{
+.uploadWrapper textarea:focus {
     outline: var(--primaryGreen) solid 2px;
-
 }
 
-
-.reviewWrapper{
+.reviewWrapper {
     box-sizing: border-box;
     width: 100%;
     display: flex;
@@ -46,7 +43,7 @@
     justify-content: flex-start;
 }
 
-.resultWrapper{
+.resultWrapper {
     flex-basis: 60%;
     background-color: #f0f0f0;
     height: 85vh;
@@ -56,9 +53,9 @@
     /* font-size: 10rem; */
 }
 
-.changeWrapper{
+.changeWrapper {
     box-sizing: border-box;
-    margin:0 1rem;
+    margin: 0 1rem;
     flex-basis: 40%;
     display: flex;
     align-items: center;
@@ -70,20 +67,20 @@
     overflow-y: scroll;
 }
 
-.changeWrapper > div{
+.changeWrapper > div {
     box-sizing: border-box;
     padding: 3rem 2rem;
     width: 80%;
     border-radius: 1rem;
 }
 
-.changeWrapper > div:hover{
+.changeWrapper > div:hover {
     scale: 1.05;
     transition-duration: 100ms;
     transition-timing-function: ease-in-out;
 }
 
-.goback{
+.goback {
     color: var(--primaryGreen);
     font-family: Inter;
     font-size: 1.3rem;
@@ -94,37 +91,38 @@
     align-items: center;
 }
 
-.resultText{
+.resultText {
     font-family: Inter;
     font-size: 1.5rem;
 }
 
-.deleteSpan{
+.deleteSpan {
     color: grey;
     text-decoration: line-through underline;
     text-decoration-color: red;
-    
 }
 
-.addSpan{
+.addSpan {
     color: green;
     text-decoration: underline;
     text-decoration-color: green;
 }
 
-.normalSpan{
+.normalSpan {
     color: black;
 }
 
-.addSpan:hover, .addSpanHighlight{
+.addSpan:hover,
+.addSpanHighlight {
     background-color: rgba(0, 128, 0, 0.2);
 }
 
-.deleteSpan:hover, .deleteSpanHighlight{
+.deleteSpan:hover,
+.deleteSpanHighlight {
     background-color: rgba(255, 15, 15, 0.2);
 }
 
-.try{
+.try {
     margin-top: 2rem;
     border-radius: 2.25rem;
     background: var(--primaryGreen);
@@ -143,7 +141,7 @@
     cursor: pointer;
 }
 
-.dropTitle{
+.dropTitle {
     color: var(--text);
     font-family: Inter;
     font-size: 2.5rem;
@@ -154,7 +152,7 @@
     margin: 0;
 }
 
-.subtext{
+.subtext {
     width: 80%;
     color: var(--text);
     font-family: Inter;
@@ -165,16 +163,15 @@
     text-align: center;
 }
 
-.try:hover{
+.try:hover {
     scale: 1.05;
     transition-duration: 100ms;
 }
 
-.activeBox{
+.activeBox {
     scale: 1.05;
 }
 
-.resultText:focus{
+.resultText:focus {
     outline: none;
 }
-

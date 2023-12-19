@@ -1,0 +1,89 @@
+.mainContainer {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--lightBG);
+    overflow-y: clip;
+}
+
+.chatWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+
+.chatPart {
+    box-sizing: border-box;
+    height: 78vh;
+    width: 100%;
+    padding: 2rem 2rem;
+    overflow-y: auto;
+}
+
+.chatPrompt {
+    width: 100%;
+    height: 12vh;
+    background-color: var(--text-box);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.uploadButton {
+    cursor: pointer;
+}
+
+.input {
+    width: 70vw;
+    height: 2rem;
+    padding: 1rem;
+    border-radius: 50px;
+    background-color: var(--box-off-white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input input {
+    border: none;
+    background-color: var(--box-off-white);
+    width: 65vw;
+    height: 100%;
+    font-family: Inter;
+    font-size: 1.1rem;
+    color: var(--text);
+    opacity: 0.5;
+}
+
+.input input:focus-visible {
+    outline: none;
+}
+
+.savedBox {
+    z-index: 1;
+    width: 60%;
+    font-family: Inter;
+    font-size: 1.5rem;
+    padding: 2rem;
+    margin: 1rem;
+    color: var(--text);
+    opacity: 0.8;
+    border-radius: 20px;
+    background-color: var(--box-off-white2);
+    text-align: center;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}

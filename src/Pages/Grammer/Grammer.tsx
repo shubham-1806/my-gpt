@@ -1,16 +1,13 @@
-import { useState, useEffect } from "react";
-import { Add, Delete, Header, Loader, Swap } from "../../Components";
-import style from "./Grammer.module.css";
-import style_Common from "../../Components/GrammerButtons/common.module.css";
-import { diffWords } from "diff";
-import back from "../../assets/back.svg";
-import copy from  "../../assets/copy.svg"
-import {
-    pageToWindowEvents,
-    windowToPageEvents,
-} from "../../Config/eventConfig";
-import toast from "react-hot-toast";
-import { ModelCommunicationResponse } from "../../Config/types";
+import { useState, useEffect } from 'react';
+import { Add, Delete, Header, Loader, Swap } from '../../Components';
+import style from './Grammer.module.css';
+import style_Common from '../../Components/GrammerButtons/common.module.css';
+import { diffWords } from 'diff';
+import back from '../../assets/back.svg';
+import copy from '../../assets/copy.svg';
+import { pageToWindowEvents, windowToPageEvents } from '../../Config/eventConfig';
+import toast from 'react-hot-toast';
+import { ModelCommunicationResponse } from '../../Config/types';
 
 const mapper = {
     added: style.addSpan,
@@ -23,34 +20,32 @@ const Grammer = () => {
         window.ipcRenderer.on(
             windowToPageEvents.GrammarCheckEvent,
             (_event, arg: ModelCommunicationResponse) => {
-                if (arg.status === "error") {
-                    toast.error(arg.content,{
-                        duration: 5000
+                if (arg.status === 'error') {
+                    toast.error(arg.content, {
+                        duration: 5000,
                     });
                     return;
                 }
-                startReview(text,arg.content);
-            }
+                startReview(text, arg.content);
+            },
         );
         return () => {
-            window.ipcRenderer.removeAllListeners(
-                windowToPageEvents.GrammarCheckEvent
-            );
+            window.ipcRenderer.removeAllListeners(windowToPageEvents.GrammarCheckEvent);
         };
     });
 
-    const [mode, setMode] = useState<"upload" | "review">("upload");
-    const [activeId, setActiveId] = useState<string>("");
+    const [mode, setMode] = useState<'upload' | 'review'>('upload');
+    const [activeId, setActiveId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
-    const [text, setText] = useState<string>("");
+    const [text, setText] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [result, setResult] = useState<string>("");
+    const [result, setResult] = useState<string>('');
     const [resultArray, setResultArray] = useState<spanTag[]>([]);
     const [changesArray, setChangesArray] = useState<changesTag>({});
 
     const updateChangesArray = (spanObj: spanTag) => {
-        const key = spanObj.id.split(".")[0];
-        setChangesArray((prevChangesArray) => {
+        const key = spanObj.id.split('.')[0];
+        setChangesArray(prevChangesArray => {
             const updatedChangesArray = { ...prevChangesArray };
             if (updatedChangesArray[key] !== undefined) {
                 updatedChangesArray[key].push(spanObj);
@@ -62,7 +57,7 @@ const Grammer = () => {
     };
 
     const setResolved = (position: string) => {
-        setChangesArray((prevChangesArray) => {
+        setChangesArray(prevChangesArray => {
             const updatedChangesArray = { ...prevChangesArray };
 
             updatedChangesArray[position][0].resolved = true;
@@ -84,7 +79,7 @@ const Grammer = () => {
     };
 
     const onClickHandler = (id: string) => {
-        const list = document.getElementsByClassName("back");
+        const list = document.getElementsByClassName('back');
         for (let i = 0; i < list.length; i++) {
             (list[i] as HTMLElement).classList.remove(style_Common.activeBox);
         }
@@ -93,9 +88,9 @@ const Grammer = () => {
         setActiveId(id);
         if (element) {
             element.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-                inline: "center",
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'center',
             });
             element.classList.add(style_Common.activeBox);
         }
@@ -106,9 +101,9 @@ const Grammer = () => {
         window.ipcRenderer.send(pageToWindowEvents.GrammarCheckEvent, text);
     };
 
-    const startReview = (textInput:string, gptResponse: string) => {
+    const startReview = (textInput: string, gptResponse: string) => {
         setLoading(false);
-        setMode("review");
+        setMode('review');
         setResult(gptResponse);
         const diff = diffWords(textInput, gptResponse);
         let skip = false;
@@ -119,68 +114,64 @@ const Grammer = () => {
                 span_obj = {
                     resolved: false,
                     text: element.value,
-                    color: mapper["added"],
-                    id: (index - 1).toString() + ".added",
+                    color: mapper['added'],
+                    id: (index - 1).toString() + '.added',
                 };
                 skip = false;
             } else if (element.removed && element.removed === true) {
                 if (
                     index + 1 < diff.length &&
-          diff[index + 1].added &&
-          diff[index + 1].added === true
+                    diff[index + 1].added &&
+                    diff[index + 1].added === true
                 ) {
                     span_obj = {
                         resolved: false,
                         text: element.value,
-                        color: mapper["removed"],
-                        id: index.toString() + ".removed",
+                        color: mapper['removed'],
+                        id: index.toString() + '.removed',
                     };
                     skip = true;
                 } else {
                     span_obj = {
                         resolved: false,
                         text: element.value,
-                        color: mapper["removed"],
-                        id: index.toString() + ".removed",
+                        color: mapper['removed'],
+                        id: index.toString() + '.removed',
                     };
                 }
             } else if (element.added && element.added === true) {
                 span_obj = {
                     resolved: false,
                     text: element.value,
-                    color: mapper["added"],
-                    id: index.toString() + ".added",
+                    color: mapper['added'],
+                    id: index.toString() + '.added',
                 };
             } else {
                 span_obj = {
                     resolved: false,
                     text: element.value,
-                    color: mapper["normal"],
-                    id: index.toString() + ".normal",
+                    color: mapper['normal'],
+                    id: index.toString() + '.normal',
                 };
             }
-            setResultArray((oldArray) => [...oldArray, span_obj]);
+            setResultArray(oldArray => [...oldArray, span_obj]);
             updateChangesArray(span_obj);
         }
     };
 
     useEffect(() => {
-        document.querySelectorAll("[data-id]").forEach((item) => {
-            (item as HTMLElement).classList.remove(
-                (item as HTMLElement).dataset.type ?? "none"
-            );
+        document.querySelectorAll('[data-id]').forEach(item => {
+            (item as HTMLElement).classList.remove((item as HTMLElement).dataset.type ?? 'none');
         });
 
-        document.querySelectorAll(`[data-id="${activeId}"]`).forEach((item) => {
-            (item as HTMLElement).classList.add(
-                (item as HTMLElement).dataset.type ?? ""
-            );
+        document.querySelectorAll(`[data-id="${activeId}"]`).forEach(item => {
+            (item as HTMLElement).classList.add((item as HTMLElement).dataset.type ?? '');
         });
     }, [activeId]);
 
     const copyText = () => {
-        const resultElement = document.getElementById("resultText");
-        let newText = "";
+        const resultElement = document.getElementById('resultText');
+        let newText = '';
         if (resultElement) {
             for (let i = 0; i < resultElement.childNodes.length; i++) {
                 const element = resultElement.childNodes[i] as HTMLElement;
@@ -188,8 +179,8 @@ const Grammer = () => {
                 if (element.dataset.type === style.deleteSpanHighlight) {
                     if (
                         i + 1 < resultElement.childNodes.length &&
-            (resultElement.childNodes[i + 1] as HTMLElement).dataset.type ===
-              style.addSpanHighlight
+                        (resultElement.childNodes[i + 1] as HTMLElement).dataset.type ===
+                            style.addSpanHighlight
                     ) {
                         i = i + 1;
                     }
@@ -201,17 +192,17 @@ const Grammer = () => {
 
     const clippyCopy = () => {
         navigator.clipboard.writeText(copyText());
-        toast.success("Copied to Clipboard!",{
-            duration: 5000
+        toast.success('Copied to Clipboard!', {
+            duration: 5000,
         });
     };
 
     const reCheck = () => {
         const newText = copyText();
-        setMode("upload");
-        setResult("");
+        setMode('upload');
+        setResult('');
         setText(newText);
-        (document.getElementById("resultText") as HTMLElement).innerText = ""
+        (document.getElementById('resultText') as HTMLElement).innerText = '';
         // setResultArray([]);
         setChangesArray({});
         setLoading(true);
@@ -221,26 +212,26 @@ const Grammer = () => {
     return (
         <div className={style.mainContainer}>
             <Header />
-            {mode === "upload" ? (
+            {mode === 'upload' ? (
                 <div className={style.uploadWrapper}>
                     {loading ? <Loader /> : null}
                     <h1 className={style.dropTitle}>Grammar Checker</h1>
                     <p className={style.subtext}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-            assumenda maxime aliquam, soluta ipsam est quod minus eligendi.
-            Voluptas aperiam quasi facilis, neque labore temporibus ad illo
-            dicta nostrum sunt ratione incidunt.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
+                        assumenda maxime aliquam, soluta ipsam est quod minus eligendi. Voluptas
+                        aperiam quasi facilis, neque labore temporibus ad illo dicta nostrum sunt
+                        ratione incidunt.
                     </p>
                     <textarea
                         placeholder="Enter your text here"
                         value={text}
                         spellCheck={false}
-                        onChange={(e) => {
+                        onChange={e => {
                             setText(e.target.value);
                         }}
                     />
                     <button className={style.try} onClick={() => sendReviewRequest()}>
-            Fix It Up !
+                        Fix It Up !
                     </button>
                 </div>
             ) : (
@@ -249,23 +240,28 @@ const Grammer = () => {
                         <div className={style.goback}>
                             <div
                                 onClick={() => {
-                                    setMode("upload");
-                                    setResult("");
-                                    setText("");
+                                    setMode('upload');
+                                    setResult('');
+                                    setText('');
                                     setResultArray([]);
                                     setChangesArray({});
-                                }}>
+                                }}
+                            >
                                 <img src={back} /> Back
                             </div>
-                            <div className={style.try} style={{marginTop: "0"}} onClick={() => reCheck()}>
-                Re-Check !
+                            <div
+                                className={style.try}
+                                style={{ marginTop: '0' }}
+                                onClick={() => reCheck()}
+                            >
+                                Re-Check !
                             </div>
                             <div
                                 onClick={() => {
                                     clippyCopy();
                                 }}
                             >
-                                <img src={copy} /> 
+                                <img src={copy} />
                             </div>
                         </div>
 
@@ -278,23 +274,24 @@ const Grammer = () => {
                             {resultArray.map((item, index) => {
                                 return (
                                     <span
-                                        data-id={item.id.split(".")[0]}
+                                        data-id={item.id.split('.')[0]}
                                         data-type={
                                             item.color === style.addSpan
                                                 ? style.addSpanHighlight
                                                 : item.color === style.deleteSpan
                                                     ? style.deleteSpanHighlight
-                                                    : "none"
+                                                    : 'none'
                                         }
                                         key={index}
                                         className={item.color}
                                         id={item.id}
                                         style={{
-                                            cursor: item.color !== style.normalSpan ? "pointer" : "",
+                                            cursor:
+                                                item.color !== style.normalSpan ? 'pointer' : '',
                                         }}
                                         onClick={() => {
                                             if (item.color !== style.normalSpan)
-                                                onClickHandler(item.id.split(".")[0]);
+                                                onClickHandler(item.id.split('.')[0]);
                                         }}
                                     >
                                         {item.text}
@@ -304,7 +301,7 @@ const Grammer = () => {
                         </div>
                     </div>
                     <div id="display" className={style.changeWrapper}>
-                        {Object.keys(changesArray).map((item) => {
+                        {Object.keys(changesArray).map(item => {
                             if (changesArray[item][0].resolved === true) return null;
                             const arrLen = changesArray[item].length;
                             if (arrLen === 2) {
@@ -320,8 +317,8 @@ const Grammer = () => {
                                     />
                                 );
                             } else {
-                                const changeType = changesArray[item][0].id.split(".")[1];
-                                if (changeType === "added")
+                                const changeType = changesArray[item][0].id.split('.')[1];
+                                if (changeType === 'added')
                                     return (
                                         <Add
                                             key={item}
@@ -333,7 +330,7 @@ const Grammer = () => {
                                             setActiveId={setActiveId}
                                         />
                                     );
-                                else if (changeType === "removed")
+                                else if (changeType === 'removed')
                                     return (
                                         <Delete
                                             key={item}

@@ -1,9 +1,9 @@
-import Grammer from "../Pages/Grammer/Grammer";
-import Home from "../Pages/Home/Home";
-import ResultPage from "../Pages/ResultPage/ResultPage";
-import Summary from "../Pages/Summary/Summary";
-
-
+import Grammer from '../Pages/Grammer/Grammer';
+import Chat from '../Pages/Chat/Chat';
+import Home from '../Pages/Home/Home';
+import ResultPage from '../Pages/ResultPage/ResultPage';
+import Saved from '../Pages/Saved/Saved';
+import Summary from '../Pages/Summary/Summary';
 
 interface RouteType {
     path: `/${string}`;
@@ -12,21 +12,28 @@ interface RouteType {
 const routes: RouteType[] = [
     {
         path: '/',
-        element: <Home />
+        element: <Home />,
     },
     {
-        path:'/result',
-        element: <ResultPage />
+        path: '/result',
+        element: <ResultPage />,
     },
     {
-        path:'/summary',
-        element: <Summary/>
+        path: '/summary',
+        element: <Summary />,
     },
     {
         path: '/grammar',
-        element: <Grammer />
-    }
-
+        element: <Grammer />,
+    },
+    {
+        path: '/chat',
+        element: <Chat />,
+    },
+    {
+        path: '/saved',
+        element: <Saved />,
+    },
 ];
-  
+
 export default routes;

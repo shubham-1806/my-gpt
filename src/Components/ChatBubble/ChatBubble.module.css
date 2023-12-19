@@ -1,0 +1,26 @@
+.bubbleWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.bubble {
+    width: 50%;
+    background-color: var(--text-box);
+    box-sizing: border-box;
+    padding: 2rem;
+    font-family: Inter;
+    font-size: 1rem;
+    position: relative;
+    margin-bottom: 2rem;
+    animation: scaler 0.5s ease-in-out;
+}
+
+@keyframes scaler {
+    from {
+        transform: scale(0.1);
+    }
+    to {
+        transform: scale(1);
+    }
+}
