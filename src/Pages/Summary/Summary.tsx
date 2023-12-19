@@ -22,6 +22,8 @@ const Summary = () => {
     const summarise = () => {
         setLoading(true);
         window.ipcRenderer.send(pageToWindowEvents.SummariseEvent, filePath);
+        // localStore("Summarised Fully")
+        
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,6 +35,20 @@ const Summary = () => {
         setFile(true);
     };
 
+
+    const localStore = (message: string)=>{
+        const local_store = localStorage.getItem('file_arrays')
+            ? JSON.parse(localStorage.getItem('file_arrays')!)
+            : [];
+        local_store.push({ name: fileName, summary:message , chatLists: [{
+            agent: 'user',
+            message: 'Uploaded the Document ' + fileName,
+            isUpload: true,
+            id: "0",
+        }] });
+        localStorage.setItem('file_arrays', JSON.stringify(local_store));
+        navigate('/saved')
+    }
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const drop = (event: any) => {
@@ -70,9 +86,9 @@ const Summary = () => {
             (_event, message: ModelCommunicationResponse) => {
                 setLoading(false);
                 if (message.status === 'success') {
-                    navigate('/result', {
-                        state: { name: 'Summary', data: message.content },
-                    });
+                    localStore(message.content)
+                    navigate('/saved')
+                    
                 } else {
                     toast.error(message.content, {
                         duration: 5000,
@@ -90,6 +106,7 @@ const Summary = () => {
             }
             window.ipcRenderer.removeAllListeners(windowToPageEvents.SummariseEvent);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
     const reset = () => {
@@ -116,7 +133,7 @@ const Summary = () => {
                                 <img src={x} className={style.cross} onClick={() => reset()} />
                                 <h1 className={style.fileName}>{fileName}</h1>
                                 <button className={style.try} onClick={() => summarise()}>
-                                    {loading ? 'Summarising...' : 'Summarise the Document?'}
+                                    {loading ? 'Upload...' : 'Upload the Document?'}
                                 </button>
                                 {loading ? <Loader /> : null}
                             </>

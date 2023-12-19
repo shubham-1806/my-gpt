@@ -11,3 +11,16 @@ export type ModelCommunicationResponse = {
     type: 'summary' | 'grammar' | 'chat' | 'upload';
     content: string;
 };
+
+export type LocalStorageItem = {
+    name: string;
+    summary: string;
+    chatLists: ChatBubbleProps[];
+}
+
+interface ChatBubbleProps {
+    agent: 'user' | 'bot';
+    message: string;
+    isUpload: boolean;
+    id: string;
+}

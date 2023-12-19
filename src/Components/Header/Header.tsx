@@ -5,7 +5,7 @@ import logo from '../../assets/logo.svg';
 import download from '../../assets/download.svg';
 import chat from '../../assets/chat.svg';
 import bookmark from '../../assets/bookmark.svg';
-// import grammarChecklogo from '../../assets/GrammarCheckLogo.svg';
+import grammarChecklogo from '../../assets/GrammarCheckLogo.svg';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -34,16 +34,16 @@ const Header = () => {
                                     Chat to Summarise
                                 </a>
                             </li>
-                            {/* <li style={{ cursor: 'pointer' }}>
+                            <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/grammar')}>
                                     <img src={grammarChecklogo} />
                                     Grammar Check
                                 </a>
-                            </li> */}
+                            </li>
                             <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/saved')}>
                                     <img src={bookmark} />
-                                    Saved Summaries
+                                    Saved File Uploads
                                 </a>
                             </li>
 
