@@ -3,6 +3,7 @@ export type ModelCommunicationMessage = {
     content?: string;
     query?: string;
     chat_history?: string[];
+    big_model?: boolean;
 };
 
 export type ModelCommunicationResponse = {

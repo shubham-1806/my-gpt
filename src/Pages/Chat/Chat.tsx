@@ -53,7 +53,7 @@ const Chat = () => {
     }, []);
 
     const addUserChatBubble = (message: string) => {
-        const chatHistory = (chatMessages.slice(2)).map(chatMessage => chatMessage.message);
+        const chatHistory = chatMessages.slice(2).map(chatMessage => chatMessage.message);
         setChatMessages([
             {
                 agent: 'user',
@@ -125,7 +125,7 @@ const Chat = () => {
         return () => {
             window.ipcRenderer.removeAllListeners(windowToPageEvents.ChatEvent);
         };
-    },[chatMessages,id]);
+    }, [chatMessages, id]);
 
     useEffect(() => {
         const scrollArray = document.getElementsByClassName('spacerToView');

@@ -56,12 +56,7 @@ const ChatBubble = ({ agent, message, isUpload, loading, id, currentId }: ChatBu
                                         delay: 100 / message.length,
                                     }}
                                     onInit={typewriter => {
-                                        typewriter
-                                            .stop()
-                                            .typeString(
-                                                message
-                                            )
-                                            .start();
+                                        typewriter.stop().typeString(message).start();
                                     }}
                                 />
                             )}
