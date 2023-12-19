@@ -39,7 +39,7 @@ const Grammer = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [text, setText] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [result, setResult] = useState<string>('');
+    const [_, setResult] = useState<string>('');
     const [resultArray, setResultArray] = useState<spanTag[]>([]);
     const [changesArray, setChangesArray] = useState<changesTag>({});
 

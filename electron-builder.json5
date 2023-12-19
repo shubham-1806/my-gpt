@@ -5,9 +5,10 @@
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
   "appId": "YourAppID",
   "asar": true,
-  "productName": "YourAppName",
+  "icon": "./assets/icons/512x512.png",
+  "productName": "My-GPT",
   "directories": {
-    "output": "release/${version}"
+    output: "release/0.0.0",
   },
   "files": [
     "dist",
@@ -17,7 +18,8 @@
     "target": [
       "dmg"
     ],
-    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+    "artifactName": "${productName}-Mac-${version}-Installer.${ext}",
+    "icon": "./assets/icons/icon.icns"
   },
   "win": {
     "target": [
@@ -40,6 +42,7 @@
     "target": [
       "AppImage"
     ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
+    "artifactName": "${productName}-Linux-${version}.${ext}",
+    "icon": "./assets/icons/"
   }
 }
