@@ -16,6 +16,7 @@ export type LocalStorageItem = {
     name: string;
     summary: string;
     chatLists: ChatBubbleProps[];
+    filepath: string;
 }
 
 interface ChatBubbleProps {

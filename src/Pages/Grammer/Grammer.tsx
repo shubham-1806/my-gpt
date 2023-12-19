@@ -251,13 +251,13 @@ const Grammer = () => {
                             >
                                 <img src={back} /> Back
                             </div>
-                            <div
+                            {/* <div
                                 className={style.try}
                                 style={{ marginTop: '0' }}
                                 onClick={() => reCheck()}
                             >
                                 Re-Check !
-                            </div>
+                            </div> */}
                             <div
                                 onClick={() => {
                                     clippyCopy();

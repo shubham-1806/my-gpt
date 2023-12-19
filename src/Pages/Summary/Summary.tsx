@@ -22,7 +22,8 @@ const Summary = () => {
     const summarise = () => {
         setLoading(true);
         localStorage.setItem('new_file_name', fileName);
-        window.ipcRenderer.send(pageToWindowEvents.SummariseEvent, filePath);
+        localStorage.setItem('new_file_path', filePath);
+        window.ipcRenderer.send(pageToWindowEvents.UploadChatDocument, filePath);
         // localStore("Summarised Fully")
         
     };
@@ -37,12 +38,16 @@ const Summary = () => {
     };
 
 
-    const localStore = (message: string)=>{
-        const new_file_name = localStorage.getItem('new_file_name') ?? ""
+    const localStore = ()=>{
+        const new_file_name = localStorage.getItem('new_file_name') ?? "";
+        localStorage.setItem('new_file_name', "")
+        const new_file_path = localStorage.getItem('new_file_path') ?? "";
+        console.log(new_file_path)
+        localStorage.setItem('new_file_path', "")
         const local_store = localStorage.getItem('file_arrays')
             ? JSON.parse(localStorage.getItem('file_arrays')!)
             : [];
-        local_store.push({ name: new_file_name, summary:message , chatLists: [{
+        local_store.push({ name: new_file_name, summary:undefined , filepath: new_file_path , chatLists: [{
             agent: 'user',
             message: 'Uploaded the Document ' + new_file_name,
             isUpload: true,
@@ -84,11 +89,11 @@ const Summary = () => {
         element.addEventListener('dragenter', dragenter);
         element.addEventListener('dragleave', dragleave);
         window.ipcRenderer.addListener(
-            windowToPageEvents.SummariseEvent,
+            windowToPageEvents.UploadChatDocument,
             (_event, message: ModelCommunicationResponse) => {
                 setLoading(false);
                 if (message.status === 'success') {
-                    localStore(message.content)
+                    localStore()
                     navigate('/saved')
                     
                 } else {
@@ -106,7 +111,7 @@ const Summary = () => {
                 element.removeEventListener('dragenter', dragenter);
                 element.removeEventListener('dragleave', dragleave);
             }
-            window.ipcRenderer.removeAllListeners(windowToPageEvents.SummariseEvent);
+            window.ipcRenderer.removeAllListeners(windowToPageEvents.UploadChatDocument);
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);

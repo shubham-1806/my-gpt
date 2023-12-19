@@ -51,7 +51,7 @@ const Chat = () => {
     }, []);
 
     const addUserChatBubble = (message: string) => {
-        const chatHistory = chatMessages.slice(2).map(chatMessage => chatMessage.message);
+        const chatHistory = chatMessages.slice(1).map(chatMessage => chatMessage.message);
         setChatMessages([
             ...chatMessages,
             {

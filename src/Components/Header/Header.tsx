@@ -28,12 +28,12 @@ const Header = () => {
                                     Upload a File
                                 </a>
                             </li>
-                            <li style={{ cursor: 'pointer' }}>
+                            {/* <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/chat')}>
                                     <img src={chat} />
                                     Chat to Summarise
                                 </a>
-                            </li>
+                            </li> */}
                             <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/grammar')}>
                                     <img src={grammarChecklogo} />
