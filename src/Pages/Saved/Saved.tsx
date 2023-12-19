@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Header, Loader } from '../../Components';
 import style from './Saved.module.css';
 import { useNavigate } from 'react-router-dom';
+import chatIcon from '../../assets/chat.svg';
+import summariseIcon from '../../assets/summarise.svg';
 
 interface ChatBubbleProps {
     agent: 'user' | 'bot';
@@ -69,6 +71,16 @@ const Saved = () => {
         setLoading(false);
     }, []);
 
+    const runSummary = (id: number) => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            navigate('/result', {
+                state: { name: 'Summary', data: id.toString() },
+            });
+        }, 1000);
+    };
+
     return (
         <div className={style.mainContainer}>
             <Header />
@@ -77,14 +89,16 @@ const Saved = () => {
             ) : (
                 <div className={style.savedWrapper}>
                     {chats.map((chat, index) => (
-                        <div
-                            key={index}
-                            className={style.savedBox}
-                            onClick={() => {
-                                navigate(chat.link, { state: chat.chatLists });
-                            }}
-                        >
-                            {chat.name}
+                        <div key={index} className={style.savedBox}>
+                            <div>{chat.name}</div>
+                            <div className={style.icondiv}>
+                                <a onClick={() => navigate('/chat', { state: 'Lorem Impsum.pdf' })}>
+                                    <img src={chatIcon} title="Chat" />
+                                </a>
+                                <a onClick={() => runSummary(69)}>
+                                    <img src={summariseIcon} title="Summarise" />
+                                </a>
+                            </div>
                         </div>
                     ))}
                 </div>

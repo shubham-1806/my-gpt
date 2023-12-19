@@ -32,10 +32,22 @@ const Chat = () => {
     const state = location.state;
 
     useEffect(() => {
+        console.log(state);
         if (state) {
-            console.log(state);
-            setChatMessages(state);
-            setId(state.length);
+            addUserChatBubbleOnFileUpload("",state)
+            // console.log(state);
+            // setChatMessages(state);
+            // setId(state.length);
+            setChatMessages([
+                ...chatMessages,
+                {
+                    agent: 'user',
+                    message: 'Uploaded the Document ' + state,
+                    isUpload: true,
+                    id: id.toString(),
+                },
+            ]);
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -43,7 +55,6 @@ const Chat = () => {
     const addUserChatBubble = (message: string) => {
         const chatHistory = (chatMessages.slice(2)).map(chatMessage => chatMessage.message);
         setChatMessages([
-            ...chatMessages,
             {
                 agent: 'user',
                 message: message,
