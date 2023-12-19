@@ -21,6 +21,7 @@ const Summary = () => {
 
     const summarise = () => {
         setLoading(true);
+        localStorage.setItem('new_file_name', fileName);
         window.ipcRenderer.send(pageToWindowEvents.SummariseEvent, filePath);
         // localStore("Summarised Fully")
         
@@ -37,12 +38,13 @@ const Summary = () => {
 
 
     const localStore = (message: string)=>{
+        const new_file_name = localStorage.getItem('new_file_name') ?? ""
         const local_store = localStorage.getItem('file_arrays')
             ? JSON.parse(localStorage.getItem('file_arrays')!)
             : [];
-        local_store.push({ name: fileName, summary:message , chatLists: [{
+        local_store.push({ name: new_file_name, summary:message , chatLists: [{
             agent: 'user',
-            message: 'Uploaded the Document ' + fileName,
+            message: 'Uploaded the Document ' + new_file_name,
             isUpload: true,
             id: "0",
         }] });

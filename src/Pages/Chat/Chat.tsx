@@ -45,7 +45,7 @@ const Chat = () => {
     useEffect(() => {
         if (state) {
             setChatMessages(state.chatLists);
-            setId(state.length);
+            setId(state.chatLists.length);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -61,7 +61,6 @@ const Chat = () => {
                 id: id.toString(),
             },
         ]);
-        console.log(chatHistory);
         saveToLocal();
         const messageToSend: ChatHistory = {
             query: message,
