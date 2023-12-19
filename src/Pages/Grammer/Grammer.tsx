@@ -37,7 +37,7 @@ const Grammer = () => {
     const [mode, setMode] = useState<'upload' | 'review'>('upload');
     const [activeId, setActiveId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
-    const [text, setText] = useState<string>('did you no that bats are mammals. we no they are mammals just lik us becaus they are warm blooded they are the only mammals that no how to fly bats are Nocturnal which means thay sleep during the day and are awak at nite?.');
+    const [text, setText] = useState<string>('');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_result, setResult] = useState<string>('');
     const [resultArray, setResultArray] = useState<spanTag[]>([]);
@@ -267,11 +267,7 @@ const Grammer = () => {
                             </div>
                         </div>
 
-                        <div
-                            id="resultText"
-                            className={style.resultText}
-                            spellCheck="false"
-                        >
+                        <div id="resultText" className={style.resultText} spellCheck="false">
                             {resultArray.map((item, index) => {
                                 return (
                                     <span
@@ -280,10 +276,13 @@ const Grammer = () => {
                                             item.color === style.addSpan
                                                 ? style.addSpanHighlight
                                                 : item.color === style.deleteSpan
-                                                    ? style.deleteSpanHighlight
-                                                    : 'none'
+                                                  ? style.deleteSpanHighlight
+                                                  : 'none'
                                         }
-                                        data-content={item.id.split('.')[0] + (item.color === style.deleteSpan).toString()}
+                                        data-content={
+                                            item.id.split('.')[0] +
+                                            (item.color === style.deleteSpan).toString()
+                                        }
                                         key={index}
                                         className={item.color}
                                         id={item.id}
@@ -296,18 +295,25 @@ const Grammer = () => {
                                             if (item.color !== style.normalSpan)
                                                 onClickHandler(item.id.split('.')[0]);
                                         }}
-                                        onKeyDown={ () => {
-                                            if(item.color === style.deleteSpan){
-                                                const element = document.querySelector(`[data-content="${item.id.split('.')[0] + (item.color === style.deleteSpan).toString()}"]`)
-                                                if(element){
-                                                    if(element.textContent?.length === 1){
+                                        onKeyDown={() => {
+                                            if (item.color === style.deleteSpan) {
+                                                const element = document.querySelector(
+                                                    `[data-content="${
+                                                        item.id.split('.')[0] +
+                                                        (item.color === style.deleteSpan).toString()
+                                                    }"]`,
+                                                );
+                                                if (element) {
+                                                    if (element.textContent?.length === 1) {
                                                         deleteSpan(item.id.split('.')[0], item.id);
-                                                        deleteSpan(item.id.split('.')[0], item.id.split('.')[0]+ ".added");
+                                                        deleteSpan(
+                                                            item.id.split('.')[0],
+                                                            item.id.split('.')[0] + '.added',
+                                                        );
                                                     }
                                                 }
                                             }
                                         }}
-                                        
                                     >
                                         {item.text}
                                     </span>
