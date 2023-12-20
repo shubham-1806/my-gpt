@@ -3,7 +3,7 @@ import style from './Header.module.css';
 import profile from '../../assets/profile.svg';
 import logo from '../../assets/logo.svg';
 import download from '../../assets/download.svg';
-import chat from '../../assets/chat.svg';
+// import chat from '../../assets/chat.svg';
 import bookmark from '../../assets/bookmark.svg';
 import grammarChecklogo from '../../assets/GrammarCheckLogo.svg';
 
