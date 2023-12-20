@@ -79,7 +79,7 @@ const Saved = () => {
                                     <div className={`${style.showPop} ${style.popup}`}  data-show={chat.name} >
                                         {' '}
                                         <div onClick={ ()=>Summarise(chat.filepath, 50)}>50</div>
-                                        <div onClick={ ()=>Summarise(chat.filepath, 100)}>100</div>
+                                        <div onClick={ ()=>Summarise(chat.filepath, 100)}>100+</div>
                                     </div>
                                 </a>
                             </div>
