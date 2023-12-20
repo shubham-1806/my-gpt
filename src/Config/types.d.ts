@@ -4,6 +4,7 @@ export type ModelCommunicationMessage = {
     query?: string;
     chat_history?: string[];
     big_model?: boolean;
+    words?: number;
 };
 
 export type ModelCommunicationResponse = {

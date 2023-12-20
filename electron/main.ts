@@ -91,10 +91,11 @@ function createWindow() {
                 });
 
                 //Events which trigger when the app wants to send messages to model
-                ipcMain.on(pageToWindowEvents.SummariseEvent, (_event, filePath) => {
+                ipcMain.on(pageToWindowEvents.SummariseEvent, (_event, filePath, words) => {
                     const messageToSend: ModelCommunicationMessage = {
                         type: 'summary',
                         content: filePath,
+                        words: words
                     };
                     console.log(messageToSend);
                     channel.assertQueue(producing_queue, { durable: true });

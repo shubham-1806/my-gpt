@@ -27,7 +27,11 @@ const Saved = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        setChats(localStorage.getItem('file_arrays') ? JSON.parse(localStorage.getItem('file_arrays')!) : []);
+        setChats(
+            localStorage.getItem('file_arrays')
+                ? JSON.parse(localStorage.getItem('file_arrays')!)
+                : [],
+        );
         window.ipcRenderer.addListener(
             windowToPageEvents.SummariseEvent,
             (_event, message: ModelCommunicationResponse) => {
@@ -45,10 +49,10 @@ const Saved = () => {
         );
     }, []);
 
-    const Summarise = (filepath: string)=>{
+    const Summarise = (filepath: string, words:number) => {
         setLoading(true);
-        window.ipcRenderer.send(pageToWindowEvents.SummariseEvent, filepath );
-    }
+        window.ipcRenderer.send(pageToWindowEvents.SummariseEvent, filepath, words);
+    };
 
     return (
         <div className={style.mainContainer}>
@@ -64,8 +68,19 @@ const Saved = () => {
                                 <a onClick={() => navigate('/chat', { state: chat })}>
                                     <img src={chatIcon} title="Chat" />
                                 </a>
-                                <a onClick={() => Summarise(chat.filepath)}>
+                                <a
+                                    className={style.sumaPop}
+                                    onClick={()=>{
+                                        document.querySelector(`[data-show="${chat.name}"]`)?.classList.toggle(style.showPop)
+                                    }}
+                                    // onClick={() => Summarise(chat.filepath)}
+                                >
                                     <img src={summariseIcon} title="Summarise" />
+                                    <div className={`${style.showPop} ${style.popup}`}  data-show={chat.name} >
+                                        {' '}
+                                        <div onClick={ ()=>Summarise(chat.filepath, 50)}>50</div>
+                                        <div onClick={ ()=>Summarise(chat.filepath, 100)}>100</div>
+                                    </div>
                                 </a>
                             </div>
                         </div>
