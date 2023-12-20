@@ -8,8 +8,9 @@ interface Props {
     deleteSpan: (position: string, id: string) => void;
     active: boolean;
     setActiveId: React.Dispatch<React.SetStateAction<string>>;
+    acceptAll: boolean;
 }
-const Add = ({ changesArray, item, addSpan, deleteSpan, active, setActiveId }: Props) => {
+const Add = ({ changesArray, item, addSpan, deleteSpan, active, setActiveId, acceptAll }: Props) => {
     const [toggle, setToggle] = useState<boolean>(false);
 
     const onClickHandler = () => {
@@ -33,6 +34,11 @@ const Add = ({ changesArray, item, addSpan, deleteSpan, active, setActiveId }: P
         setToggle(active);
     }, [active]);
 
+    useEffect(() => {
+        if(acceptAll)
+            addSpan(item, changesArray[item][0].id)
+    }, [acceptAll]);
+
     return (
         <div
             id={'button' + changesArray[item][0].id.split('.')[0]}
@@ -48,6 +54,7 @@ const Add = ({ changesArray, item, addSpan, deleteSpan, active, setActiveId }: P
             {toggle ? (
                 <div className={style.buttonWrapper}>
                     <div
+                        data-accept="accept"
                         onClick={() => addSpan(item, changesArray[item][0].id)}
                         className={style.accept}
                     >

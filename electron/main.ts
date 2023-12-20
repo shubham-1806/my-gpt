@@ -67,6 +67,7 @@ function createWindow() {
                             const response = JSON.parse(
                                 msg.content.toString(),
                             ) as ModelCommunicationResponse;
+                            console.log(response);
                             if (response.type === 'summary') {
                                 win?.webContents.send(windowToPageEvents.SummariseEvent, response);
                             } else if (response.type === 'grammar') {
@@ -74,9 +75,12 @@ function createWindow() {
                                     windowToPageEvents.GrammarCheckEvent,
                                     response,
                                 );
-                            } else if (response.type === 'chat' || response.type === 'upload') {
+                            } else if (response.type === 'chat') {
                                 win?.webContents.send(windowToPageEvents.ChatEvent, response);
-                            } else {
+                            }else if(response.type==='upload'){
+                                win?.webContents.send(windowToPageEvents.UploadChatDocument,response);
+                            } 
+                            else {
                                 throw new Error('Unknown type of response');
                             }
                         } catch (err) {
@@ -87,11 +91,13 @@ function createWindow() {
                 });
 
                 //Events which trigger when the app wants to send messages to model
-                ipcMain.on(pageToWindowEvents.SummariseEvent, (_event, filePath) => {
+                ipcMain.on(pageToWindowEvents.SummariseEvent, (_event, filePath, words) => {
                     const messageToSend: ModelCommunicationMessage = {
                         type: 'summary',
                         content: filePath,
+                        words: words
                     };
+                    console.log(messageToSend);
                     channel.assertQueue(producing_queue, { durable: true });
                     channel.sendToQueue(
                         producing_queue,

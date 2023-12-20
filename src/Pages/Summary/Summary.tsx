@@ -21,7 +21,11 @@ const Summary = () => {
 
     const summarise = () => {
         setLoading(true);
-        window.ipcRenderer.send(pageToWindowEvents.SummariseEvent, filePath);
+        localStorage.setItem('new_file_name', fileName);
+        localStorage.setItem('new_file_path', filePath);
+        window.ipcRenderer.send(pageToWindowEvents.UploadChatDocument, filePath);
+        // localStore("Summarised Fully")
+        
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,6 +37,25 @@ const Summary = () => {
         setFile(true);
     };
 
+
+    const localStore = ()=>{
+        const new_file_name = localStorage.getItem('new_file_name') ?? "";
+        localStorage.setItem('new_file_name', "")
+        const new_file_path = localStorage.getItem('new_file_path') ?? "";
+        console.log(new_file_path)
+        localStorage.setItem('new_file_path', "")
+        const local_store = localStorage.getItem('file_arrays')
+            ? JSON.parse(localStorage.getItem('file_arrays')!)
+            : [];
+        local_store.push({ name: new_file_name, summary:undefined , filepath: new_file_path , chatLists: [{
+            agent: 'user',
+            message: 'Uploaded the Document ' + new_file_name,
+            isUpload: true,
+            id: "0",
+        }] });
+        localStorage.setItem('file_arrays', JSON.stringify(local_store));
+        navigate('/saved')
+    }
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const drop = (event: any) => {
@@ -66,13 +89,13 @@ const Summary = () => {
         element.addEventListener('dragenter', dragenter);
         element.addEventListener('dragleave', dragleave);
         window.ipcRenderer.addListener(
-            windowToPageEvents.SummariseEvent,
+            windowToPageEvents.UploadChatDocument,
             (_event, message: ModelCommunicationResponse) => {
                 setLoading(false);
                 if (message.status === 'success') {
-                    navigate('/result', {
-                        state: { name: 'Summary', data: message.content },
-                    });
+                    localStore()
+                    navigate('/saved')
+                    
                 } else {
                     toast.error(message.content, {
                         duration: 5000,
@@ -88,8 +111,9 @@ const Summary = () => {
                 element.removeEventListener('dragenter', dragenter);
                 element.removeEventListener('dragleave', dragleave);
             }
-            window.ipcRenderer.removeAllListeners(windowToPageEvents.SummariseEvent);
+            window.ipcRenderer.removeAllListeners(windowToPageEvents.UploadChatDocument);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
     const reset = () => {
@@ -101,7 +125,9 @@ const Summary = () => {
         <div className={style.mainContainer}>
             <Header />
             <div className={style.dropWrapper}>
-                <h1 className={style.dropTitle}>Summarise a Research Paper or an Article</h1>
+                <h1 className={style.dropTitle}>
+                    Locally Upload a Research Paper or an Article
+                </h1>
                 <p className={style.subtext}>
                     Summarise any article or research paper, and accelerate your reading and
                     learning with our AI technology. Perfect also for research papers, screening
@@ -114,7 +140,7 @@ const Summary = () => {
                                 <img src={x} className={style.cross} onClick={() => reset()} />
                                 <h1 className={style.fileName}>{fileName}</h1>
                                 <button className={style.try} onClick={() => summarise()}>
-                                    {loading ? 'Summarising...' : 'Summarise the Document?'}
+                                    {loading ? 'Upload...' : 'Upload the Document?'}
                                 </button>
                                 {loading ? <Loader /> : null}
                             </>

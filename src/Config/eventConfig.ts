@@ -16,5 +16,5 @@ export const windowToPageEvents: EventConfigType = {
     SummariseEvent: 'summarise-response',
     GrammarCheckEvent: 'grammar-check-response',
     ChatEvent: 'chat-response',
-    UploadChatDocument: 'NA',
+    UploadChatDocument: 'upload-chat-response',
 };

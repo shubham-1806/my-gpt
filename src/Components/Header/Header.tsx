@@ -3,7 +3,7 @@ import style from './Header.module.css';
 import profile from '../../assets/profile.svg';
 import logo from '../../assets/logo.svg';
 import download from '../../assets/download.svg';
-import chat from '../../assets/chat.svg';
+// import chat from '../../assets/chat.svg';
 import bookmark from '../../assets/bookmark.svg';
 import grammarChecklogo from '../../assets/GrammarCheckLogo.svg';
 
@@ -25,15 +25,15 @@ const Header = () => {
                             <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/summary')}>
                                     <img src={download} />
-                                    Upload a PDF to Summarise
+                                    Upload a File
                                 </a>
                             </li>
-                            <li style={{ cursor: 'pointer' }}>
+                            {/* <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/chat')}>
                                     <img src={chat} />
                                     Chat to Summarise
                                 </a>
-                            </li>
+                            </li> */}
                             <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/grammar')}>
                                     <img src={grammarChecklogo} />
@@ -43,7 +43,7 @@ const Header = () => {
                             <li style={{ cursor: 'pointer' }}>
                                 <a onClick={() => navigate('/saved')}>
                                     <img src={bookmark} />
-                                    Saved Summaries
+                                    Saved File Uploads
                                 </a>
                             </li>
 

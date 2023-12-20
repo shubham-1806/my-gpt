@@ -28,4 +28,69 @@
     opacity: 0.8;
     border-radius: 20px;
     background-color: var(--box-off-white2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icondiv{
+    display: flex;
+    gap: 2rem;
+}
+
+
+.icondiv img{
+    margin: 0;
+    padding: 0;
+    height: 30px;
+    width: 30px;
+    flex-basis: 20%;
+}
+
+.textDiv{
+    flex-basis: 80%;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.sumaPop{
+    position: relative;
+}
+
+.popup{
+    position: absolute;
+    top: 110%;
+    left: -225%;
+    background-color: var(--box-off-white2);
+    border-radius: 20px;
+    padding: 0.4rem;
+    display: flex;
+    border: 4px solid var(--primaryGreen);
+}
+
+.popup > div{
+    margin: 0.2rem;
+    padding: 0.6rem;
+    border-radius: 10px;
+    background-color: var(--lightBG);
+    font-size: 1.2rem;
+    font-family: Inter;
+}
+
+.popup::after{
+    content: "";
+    position: absolute;
+    top: -32%;
+    left: 52%;
+    height: 10px;
+    width: 10px;
+    z-index: 10;
+    border-left: 10px solid transparent; 
+    border-right: 10px solid transparent; 
+    border-bottom: 10px solid var(--primaryGreen); 
+}
+
+.showPop{
+    display: none;
 }

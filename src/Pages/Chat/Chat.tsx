@@ -5,7 +5,7 @@ import enter from '../../assets/enter.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { windowToPageEvents, pageToWindowEvents } from '../../Config/eventConfig';
-import { ModelCommunicationResponse } from '../../Config/types';
+import { LocalStorageItem, ModelCommunicationResponse } from '../../Config/types';
 import toast from 'react-hot-toast';
 
 export interface ChatHistory {
@@ -31,17 +31,27 @@ const Chat = () => {
     const location = useLocation();
     const state = location.state;
 
+    const saveToLocal = ()=>{
+        const local_store = localStorage.getItem('file_arrays')
+        if(local_store){
+            JSON.parse(local_store).map((item: LocalStorageItem)=>{
+                if(item.name === state.name){
+                    item.chatLists = chatMessages;
+                }   
+            })
+        }
+    }
+
     useEffect(() => {
         if (state) {
-            console.log(state);
-            setChatMessages(state);
-            setId(state.length);
+            setChatMessages(state.chatLists);
+            setId(state.chatLists.length);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const addUserChatBubble = (message: string) => {
-        const chatHistory = (chatMessages.slice(2)).map(chatMessage => chatMessage.message);
+        const chatHistory = chatMessages.slice(1).map(chatMessage => chatMessage.message);
         setChatMessages([
             ...chatMessages,
             {
@@ -51,7 +61,7 @@ const Chat = () => {
                 id: id.toString(),
             },
         ]);
-        console.log(chatHistory);
+        saveToLocal();
         const messageToSend: ChatHistory = {
             query: message,
             chat_history: chatHistory,
@@ -73,6 +83,7 @@ const Chat = () => {
                 id: id.toString(),
             },
         ]);
+        saveToLocal();
         setId(id + 1);
         setBotTurn(true);
         setLoading(true);
@@ -93,8 +104,6 @@ const Chat = () => {
             (_event, message: ModelCommunicationResponse) => {
                 setLoading(false);
                 setBotTurn(false);
-                console.log(message);
-                console.log(chatMessages);
                 if (message.status === 'success') {
                     setChatMessages([
                         ...chatMessages,
@@ -114,7 +123,7 @@ const Chat = () => {
         return () => {
             window.ipcRenderer.removeAllListeners(windowToPageEvents.ChatEvent);
         };
-    },[chatMessages,id]);
+    }, [chatMessages, id]);
 
     useEffect(() => {
         const scrollArray = document.getElementsByClassName('spacerToView');
