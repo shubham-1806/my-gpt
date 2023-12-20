@@ -38,10 +38,13 @@ const Grammer = () => {
     const [activeId, setActiveId] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [text, setText] = useState<string>('');
+    // did you no that bats are mammals. we no they are mammals just lik us becaus they are warm blooded they are the only mammals that no how to fly bats are Nocturnal which means thay sleep during the day and are awak at nite?.
+    
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, setResult] = useState<string>("");
     const [resultArray, setResultArray] = useState<spanTag[]>([]);
     const [changesArray, setChangesArray] = useState<changesTag>({});
+    const [acceptAll, setAcceptAll] = useState<boolean>(false);
 
     const updateChangesArray = (spanObj: spanTag) => {
         const key = spanObj.id.split('.')[0];
@@ -198,18 +201,34 @@ const Grammer = () => {
         });
     };
 
-    const reCheck = () => {
-        const newText = copyText();
-        setMode('upload');
-        setResult('');
-        setText(newText);
-        (document.getElementById('resultText') as HTMLElement).textContent = '';
-        // setResultArray([]);
-        setChangesArray({});
-        setLoading(true);
-        // startReview(newText, "'Did you know that bats are mammals? We know this because they are mammals just like us because they are warm-blooded, and they are the only mammals that know how to fly. Bats are nocturnal, which means they sleep during the day and are awake at night.");
-        window.ipcRenderer.send(pageToWindowEvents.GrammarCheckEvent, newText);
-    };
+    // const reCheck = () => {
+    //     const newText = copyText();
+    //     setMode('upload');
+    //     setResult('');
+    //     setText(newText);
+    //     (document.getElementById('resultText') as HTMLElement).textContent = '';
+    //     // setResultArray([]);
+    //     setChangesArray({});
+    //     setLoading(true);
+    //     // startReview(newText, "'Did you know that bats are mammals? We know this because they are mammals just like us because they are warm-blooded, and they are the only mammals that know how to fly. Bats are nocturnal, which means they sleep during the day and are awake at night.");
+    //     window.ipcRenderer.send(pageToWindowEvents.GrammarCheckEvent, newText);
+    // };
+
+    const reCheck = ()=>{
+        // Object.keys(changesArray).forEach(item => {
+        //     const element = document.querySelector(`[data-val="${item}"]`)
+        //     if(element){
+        //         (element as HTMLElement).click();
+        //         const accept = element.querySelector('[data-accept="accept"]');
+        //         console.log(accept);
+        //         if(accept){
+        //             console.log("accept");
+        //             (accept as HTMLElement).click()
+        //         }
+        //     }
+        // })
+        setAcceptAll(true)
+    }
 
     return (
         <div className={style.mainContainer}>
@@ -251,13 +270,13 @@ const Grammer = () => {
                             >
                                 <img src={back} /> Back
                             </div>
-                            {/* <div
+                            <div
                                 className={style.try}
                                 style={{ marginTop: '0' }}
                                 onClick={() => reCheck()}
                             >
-                                Re-Check !
-                            </div> */}
+                                Accept All!
+                            </div>
                             <div
                                 onClick={() => {
                                     clippyCopy();
@@ -335,6 +354,7 @@ const Grammer = () => {
                                         item={item}
                                         active={activeId === item}
                                         setActiveId={setActiveId}
+                                        acceptAll={acceptAll}
                                     />
                                 );
                             } else {
@@ -349,6 +369,8 @@ const Grammer = () => {
                                             item={item}
                                             active={activeId === item}
                                             setActiveId={setActiveId}
+                                            acceptAll={acceptAll}
+
                                         />
                                     );
                                 else if (changeType === 'removed')
@@ -361,6 +383,7 @@ const Grammer = () => {
                                             item={item}
                                             active={activeId === item}
                                             setActiveId={setActiveId}
+                                            acceptAll={acceptAll}
                                         />
                                     );
                             }
