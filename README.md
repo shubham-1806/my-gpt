@@ -27,3 +27,5 @@ Clone the repository to your local
    ```
    yarn husky install
    ```
+
+App can be built using `yarn build` and found in release/{version} folder
